@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LexiSub</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20fill%3D%22%231f6f5c%22%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2216%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20x%3D%2211%22%20y%3D%2216%22%20width%3D%2213%22%20height%3D%225%22%20rx%3D%222.5%22%2F%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M28%2018.5H36M33%2016l3%202.5l-3%202.5%22%20stroke-width%3D%222.6%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20x%3D%2241%22%20y%3D%2216%22%20width%3D%2212%22%20height%3D%225%22%20rx%3D%222.5%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20x%3D%2211%22%20y%3D%2230%22%20width%3D%2210%22%20height%3D%225%22%20rx%3D%222.5%22%2F%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M28%2032.5H36M33%2030l3%202.5l-3%202.5%22%20stroke-width%3D%222.6%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20x%3D%2241%22%20y%3D%2230%22%20width%3D%2212%22%20height%3D%225%22%20rx%3D%222.5%22%20opacity%3D%22.6%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20x%3D%2211%22%20y%3D%2244%22%20width%3D%2213%22%20height%3D%225%22%20rx%3D%222.5%22%2F%3E%3Cpath%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M28%2046.5H36M33%2044l3%202.5l-3%202.5%22%20stroke-width%3D%222.6%22%2F%3E%3Crect%20fill%3D%22%23ffffff%22%20x%3D%2241%22%20y%3D%2244%22%20width%3D%229%22%20height%3D%225%22%20rx%3D%222.5%22%2F%3E%3C%2Fsvg%3E">
+<style>
+:root{--bg:#eef1ef;--card:#ffffff;--tx:#1b2420;--mut:#5f6d66;--bd:#d8dfdb;--ac:#1f6f5c;--acb:#e3f1ec;--onac:#ffffff;--err:#b42318;--t1:#e6f4ee;--t2:#fdf1dc;--t3:#e7edfc;--t4:#fbe9f1;--CHARACTER:#e3f3e7;--LOCATION:#efe7fb;--ORGANIZATION:#fdebd6;--TITLES:#dff2f3;--PHRASE:#fbf6d2;--M:#cfe0ff;--F:#fad1e1;--Q:#e3e3e3;--green:#2f9e78;--amber:#f59f00;--blue:#4c6ef5;--pink:#e64980;--okb:#217a60;--disp:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;--sys:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--ink:var(--tx);--muted:var(--mut);--line:var(--bd);--accent:var(--ac);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121714;--card:#1b221e;--tx:#e6ece8;--mut:#9aa8a0;--bd:#2d3832;--ac:#5fc4a8;--acb:#1f3a31;--onac:#0e1a15;--err:#ff8b7e;--t1:#18291f;--t2:#2b2515;--t3:#1a2236;--t4:#2b1c25;--CHARACTER:#1a2b20;--LOCATION:#2a2338;--ORGANIZATION:#2e2417;--TITLES:#17292b;--PHRASE:#2b2915;--M:#1f3358;--F:#4a2335;--Q:#2c3430;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121714;--card:#1b221e;--tx:#e6ece8;--mut:#9aa8a0;--bd:#2d3832;--ac:#5fc4a8;--acb:#1f3a31;--onac:#0e1a15;--err:#ff8b7e;--t1:#18291f;--t2:#2b2515;--t3:#1a2236;--t4:#2b1c25;--CHARACTER:#1a2b20;--LOCATION:#2a2338;--ORGANIZATION:#2e2417;--TITLES:#17292b;--PHRASE:#2b2915;--M:#1f3358;--F:#4a2335;--Q:#2c3430;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 var(--sys);background:var(--bg);color:var(--tx);min-height:100vh;border-top:5px solid;border-image:linear-gradient(90deg,#2f9e78,#f59f00,#4c6ef5,#e64980) 1}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+header.fh,main,footer.ft{max-width:1050px;margin-left:auto;margin-right:auto;padding-left:20px;padding-right:20px}
+main{padding-top:6px;padding-bottom:12px;display:grid;gap:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-top:4px solid var(--green);border-radius:12px;padding:16px}
+.card h2{font:700 1.05rem/1.25 var(--disp);margin:0 0 12px}
+.hbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--t4);border-top-color:var(--pink)}
+.grid2>section:nth-child(1){background:var(--t1);border-top-color:var(--green)}
+.grid2>section:nth-child(2){background:var(--t2);border-top-color:var(--amber)}
+#manualBox{background:var(--t2);border-top-color:var(--amber)}
+#review{background:var(--t4);border-top-color:var(--pink)}
+main>section.card:last-of-type{border-top-color:var(--blue)}
+.hbar button{background:var(--pink);color:#fff;border-color:var(--pink)}
+.hbar button:hover{filter:brightness(1.1);border-color:var(--pink)}
+.occ-ico{display:inline-block;cursor:help;line-height:0;margin:0 1px;color:var(--tx);vertical-align:middle}
+.occ-ico svg{width:14px;height:14px}
+th.occth{position:sticky}
+th.occth.active{color:var(--ac)}
+.occpop{position:fixed;z-index:20;background:var(--card);border:1px solid var(--bd);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.15);padding:10px;min-width:200px;max-width:360px;max-height:320px;overflow:auto;font:13px var(--sys);text-align:left}
+.occpop label{display:flex;gap:6px;align-items:center;color:var(--tx);font-size:13px;margin:3px 0;cursor:pointer;word-break:break-all}
+.occpop .row{justify-content:space-between;margin-top:8px}
+.recent{display:flex;gap:8px;align-items:center;padding:6px 8px;border-radius:8px;cursor:pointer;margin-top:4px;border:1px solid transparent}
+.recent:hover{background:var(--acb)}
+.recent.cur{border-color:var(--ac)}
+.recent .rt{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.h2row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.h2row h2{margin-bottom:12px}
+.helpwrap{position:relative;font-size:12.5px;color:var(--ac);cursor:help;white-space:nowrap;outline:none}
+.helpwrap .qm{display:inline-flex;width:16px;height:16px;border-radius:50%;background:var(--ac);color:var(--onac);font-size:11px;font-weight:700;align-items:center;justify-content:center;margin-left:2px}
+.howto{display:none;position:absolute;right:0;top:calc(100% + 8px);z-index:30;width:min(420px,80vw);white-space:normal;color:var(--tx);font-size:12.5px;line-height:1.45;background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;box-shadow:0 8px 24px rgba(0,0,0,.15);cursor:default}
+.howto::before{content:"";position:absolute;top:-6px;right:18px;width:10px;height:10px;background:var(--card);border-left:1px solid var(--bd);border-top:1px solid var(--bd);transform:rotate(45deg)}
+.howto li{text-align:justify;hyphens:none;-webkit-hyphens:none}
+.howto p{margin:8px 0 0;text-align:justify;hyphens:none;-webkit-hyphens:none;color:var(--mut)}
+.helpwrap::after{content:"";position:absolute;left:0;right:0;top:100%;height:10px}
+.helpwrap:hover .howto,.helpwrap:focus .howto,.helpwrap:focus-within .howto{display:block}
+.howto ol{margin:4px 0 0;padding-left:18px}
+.howto li{margin:3px 0}
+#projectContext{width:100%;min-height:54px;font:13px/1.4 var(--sys);resize:vertical}
+.dot{color:var(--mut);font-size:16px;line-height:1}
+.dropzone{border:2px dashed var(--ac);border-radius:12px;padding:10px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--card);cursor:pointer;transition:background .15s}
+.dropzone b{color:var(--tx);font-size:14px}
+.dropzone span{color:var(--mut);font-size:13px}
+.dropzone.drop{background:var(--acb)}
+#projectTitle{flex:1;min-width:260px;font:600 18px var(--sys);border:1px solid var(--bd);border-radius:8px;padding:7px 10px;background:var(--card);color:var(--tx)}
+#projectTitle:focus{border-color:var(--ac);outline:none}
+#projectTitle::placeholder{color:var(--mut)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid2>.card{min-width:0}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+label{font-size:12px;color:var(--mut);display:block;margin-bottom:3px}
+input[type=text],input[type=password],input[type=number],select,textarea{font:inherit;color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:6px 8px;background:var(--card)}
+input[type=file]{max-width:100%;color:var(--mut)}
+textarea{width:100%;min-height:120px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+button{font:inherit;color:var(--tx);border:1px solid var(--bd);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer}
+button:hover{border-color:var(--ac)}
+button.primary{background:var(--ac);color:var(--onac);border-color:var(--ac)}
+button.ok{background:var(--okb);color:#fff;border-color:var(--okb)}
+button.primary:hover,button.ok:hover{filter:brightness(1.12)}
+button.danger{color:var(--err)}
+button.small{padding:2px 8px;font-size:12px}
+button:disabled{opacity:.5;cursor:default}
+.files{font-size:12px;color:var(--mut);margin-top:8px}
+.files span{display:inline-block;background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:1px 6px;margin:2px}
+.progress{height:6px;background:var(--bd);border-radius:3px;overflow:hidden;margin-top:10px;display:none}
+.progress div{height:100%;background:var(--ac);width:0;transition:width .3s}
+#status{font-size:12px;color:var(--mut);margin-top:6px;white-space:pre-wrap}
+.cost{font-size:12px;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;margin-top:10px}
+.chips{display:flex;gap:4px;flex-wrap:nowrap}
+.iarow{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:8px}
+.iarow>div{min-width:0}.iarow select,.iarow input{width:100%}
+.keyrow{display:flex;gap:8px;align-items:flex-end;flex-wrap:nowrap}
+.keyrow>div:first-child{flex:1;min-width:0}
+.filterbar{display:flex;gap:8px;align-items:center;flex-wrap:nowrap;margin-bottom:10px}
+@media(max-width:900px){.filterbar,.chips,.keyrow{flex-wrap:wrap}.iarow{grid-template-columns:1fr}}
+.chip{border-radius:14px;padding:3px 8px;font-size:11px;white-space:nowrap;border:1px solid var(--bd);cursor:pointer;user-select:none;color:var(--tx)}
+.chip.off{opacity:.35}
+.chip.all{background:var(--ac);color:var(--onac);border-color:var(--ac)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{position:sticky;top:0;z-index:1;background:var(--t3);text-align:center;padding:7px 8px;border-bottom:2px solid var(--bd);cursor:pointer;white-space:nowrap;font:600 13px var(--disp)}
+th.nosort{cursor:default}
+td{padding:4px 8px;vertical-align:middle;text-align:center}
+th,td{border-right:1px solid color-mix(in srgb,var(--bd) 55%,transparent)}
+th:last-child,td:last-child{border-right:none}
+td select{text-align:center;text-align-last:center}
+tr.sep td{border-top:3px solid var(--mut)}
+td[contenteditable]{outline:none;min-width:80px}
+td[contenteditable]:focus{background:var(--card);box-shadow:inset 0 0 0 2px var(--ac)}
+tr.t-CHARACTER{background:var(--CHARACTER)}tr.t-LOCATION{background:var(--LOCATION)}tr.t-ORGANIZATION{background:var(--ORGANIZATION)}tr.t-TITLES{background:var(--TITLES)}tr.t-PHRASE{background:var(--PHRASE)}
+tr.pinned{outline:2px dashed var(--ac);outline-offset:-2px}
+td select{border:none;background-color:transparent;padding:2px 14px 2px 2px;font-size:12px;-webkit-appearance:none;appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='4'%3E%3Cpath d='M0 0l3.5 4L7 0z' fill='%23b0b3b8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 3px center}
+td.g-M{background:var(--M)}td.g-F{background:var(--F)}td.g-Q{background:var(--Q)}
+td.occ{font-size:11px;color:var(--mut)}
+td.notes{font-size:12px;color:var(--mut)}
+#glossWrap{height:70vh;max-height:none}
+table.fixed{table-layout:fixed}
+td.act{white-space:nowrap;text-align:right;width:1%;position:relative}
+td.act .edited-dot{position:absolute;left:4px;top:50%;transform:translateY(-50%);margin:0}
+td.notes,td.occ{text-align:left}
+td.occ,th:nth-last-child(2){border-right:none}
+.edited-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--amber);margin-right:6px;vertical-align:middle}
+.tablewrap{max-height:70vh;overflow:auto;border:1px solid var(--bd);border-radius:10px;background:var(--card)}
+.count{font-size:12px;color:var(--mut)}
+.upd td.diff{font-weight:600;color:var(--err)}
+.part{border:1px dashed var(--bd);border-radius:10px;padding:10px;margin-top:10px}
+.hidden{display:none!important}
+.help{font-size:12px;color:var(--mut)}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+/* ===== identidade da família ===== */
+.fh{text-align:center;padding-top:26px;padding-bottom:18px}
+.fh .brand{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 0 6px}
+.fh .brand svg{width:clamp(40px,8vw,48px);height:auto;flex:none}
+.fh h1{margin:0;font:800 clamp(1.75rem,4.6vw,2.2rem)/1.05 var(--disp);letter-spacing:-.03em;color:var(--tx)}
+.fh .sub{margin:0 auto;max-width:none;white-space:nowrap;color:var(--mut);font-size:1rem;line-height:1.45}
+@media (max-width:900px){.fh .sub{white-space:normal}}
+.logo-bg{fill:var(--ac)}.logo-fg{fill:var(--onac)}
+.logo-st{fill:none;stroke:var(--onac);stroke-linecap:round;stroke-linejoin:round}
+footer.ft{text-align:center;color:var(--mut);font-size:.9rem;line-height:1.5;padding-top:28px;padding-bottom:32px}
+footer.ft p{margin:0}
+footer.ft a{color:var(--ac);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="fh">
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="logo-bg" width="64" height="64" rx="16"/><rect class="logo-fg" x="11" y="16" width="13" height="5" rx="2.5"/><path class="logo-st" d="M28 18.5H36M33 16l3 2.5l-3 2.5" stroke-width="2.6"/><rect class="logo-fg" x="41" y="16" width="12" height="5" rx="2.5"/><rect class="logo-fg" x="11" y="30" width="10" height="5" rx="2.5"/><path class="logo-st" d="M28 32.5H36M33 30l3 2.5l-3 2.5" stroke-width="2.6"/><rect class="logo-fg" x="41" y="30" width="12" height="5" rx="2.5" opacity=".6"/><rect class="logo-fg" x="11" y="44" width="13" height="5" rx="2.5"/><path class="logo-st" d="M28 46.5H36M33 44l3 2.5l-3 2.5" stroke-width="2.6"/><rect class="logo-fg" x="41" y="44" width="9" height="5" rx="2.5"/></svg><h1>LexiSub</h1></div>
+  <p class="sub">Glossário inteligente para tradução e legendagem.</p>
+</header>
+<main>
+  <div class="card hbar">
+  <input type="text" id="projectTitle" placeholder="Título do projeto" oninput="saveTitle()">
+  <button id="recentBtn" onclick="openRecent(event)">Projetos Recentes ▾</button>
+  <span class="dot">•</span>
+  <button onclick="newProject()">Novo Projeto</button>
+  <button onclick="importXlsx()">Abrir Projeto</button>
+  <span class="dot">•</span>
+  <button onclick="exportXlsx()">Exportar Projeto</button>
+  <button onclick="copyAsText()">Copiar em Texto</button>
+  <textarea id="projectContext" placeholder="Contexto do projeto (opcional): sinopse, público, tom, observações do cliente…" oninput="saveContext()"></textarea>
+  </div>
+  <div class="grid2">
+    <section class="card">
+      <div class="h2row"><h2>1. Legendas</h2><span class="helpwrap" tabindex="0">Como funciona? <span class="qm">?</span><div class="howto" role="tooltip">
+                <ol>
+          <li><b>Primeira vez:</b> carregue a legenda (ou várias) e clique em <i>Analisar legendas</i>. O LexiSub cria o glossário com personagens, lugares, organizações, títulos e expressões que aparecem nos diálogos.</li>
+          <li><b>Revise e exporte:</b> edite o que quiser na tabela e clique em <i>Exportar Projeto</i> para guardar o arquivo no seu computador.</li>
+          <li><b>Chegou episódio novo?</b> Abra o projeto (em <i>Projetos Recentes</i> ou <i>Abrir Projeto</i>), carregue só as legendas novas e analise. Os termos que ainda não estão no glossário aparecem numa lista de revisão: você aceita ou recusa cada um, e só os aceitos entram no glossário final.</li>
+        </ol>
+        <p><b>Privacidade:</b> seus projetos, as legendas e a chave de API ficam salvos apenas no navegador deste computador. Nada é enviado para servidores do LexiSub. O texto das legendas só vai para a IA escolhida quando você clica em <i>Analisar legendas</i>.</p>
+      </div></span></div>
+      <div class="dropzone" id="dropzone" role="button" tabindex="0" onclick="$('subFiles').click()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();$('subFiles').click()}">
+        <b>Clique aqui ou arraste os arquivos de legenda</b>
+        <span id="dzSub">Nenhum arquivo escolhido (SRT, DFXP, PXTT, TTML ou TTAL)</span>
+      </div>
+      <input type="file" id="subFiles" multiple accept=".srt,.dfxp,.pxtt,.ttml,.ttal,.xml" class="hidden">
+      <div class="row" style="margin-top:8px;justify-content:space-between;align-items:flex-start;flex-wrap:nowrap"><div class="files" id="fileList" style="margin-top:0">Nenhuma legenda carregada.</div><button class="small" style="white-space:nowrap" onclick="clearFiles()">Limpar legendas</button></div>
+      <details style="margin-top:8px"><summary class="help">Ver texto limpo</summary><textarea id="cleanPreview" readonly style="min-height:150px"></textarea></details>
+    </section>
+    <section class="card">
+      <h2>2. IA</h2>
+      <div class="iarow">
+        <div><label>Modo</label>
+          <select id="provider" onchange="onProviderChange()">
+            <option value="claude">Claude (API)</option>
+            <option value="openai">OpenAI / ChatGPT (API)</option>
+            <option value="gemini">Gemini (API)</option>
+            <option value="manual">Manual (copiar e colar no chat)</option>
+          </select></div>
+        <div class="apiOnly"><label>Modelo</label><input type="text" id="model" onchange="onModelChange()"></div>
+        <div><label>Idioma de destino</label><input type="text" id="targetLang" value="português do Brasil" onchange="saveSettings()"></div>
+      </div>
+      <div class="keyrow apiOnly" style="margin-top:8px">
+        <div><label>Chave de API (fica salva só neste navegador)</label><input type="password" id="apiKey" style="width:100%" onchange="saveSettings()"></div>
+        <button onclick="forgetKey()">Esquecer chave</button>
+        <div title="Preços de referência (nov/2026). Confira no site do provedor."><label style="white-space:nowrap">US$/1M entrada · saída</label><input type="number" step="0.01" min="0" id="priceIn" style="width:56px" onchange="saveSettings();updateEstimate()"> <input type="number" step="0.01" min="0" id="priceOut" style="width:56px" onchange="saveSettings();updateEstimate()"></div>
+      </div>
+      <div class="cost apiOnly" id="costBox">Carregue legendas para ver o custo estimado.</div>
+      <div style="margin-top:12px;text-align:center">
+        <button class="primary" id="analyzeBtn" onclick="analyze()">Analisar legendas</button>
+        <div class="help" id="modeHint"></div>
+      </div>
+      <div class="progress" id="prog"><div></div></div>
+      <div id="status"></div>
+    </section>
+  </div>
+
+  <section class="card hidden" id="manualBox">
+    <h2>Modo manual</h2>
+    <p class="help">Copie cada parte, cole numa conversa com o Claude ou o ChatGPT e cole a resposta (o JSON) no campo de baixo da mesma parte. Depois clique em “Processar respostas”.</p>
+    <div id="manualParts"></div>
+    <div class="row" style="margin-top:10px"><button class="primary" onclick="processManual()">Processar respostas</button><button onclick="hide('manualBox')">Fechar</button></div>
+  </section>
+
+  <section class="card hidden" id="review">
+    <h2>Revisão: termos novos e sugestões de atualização</h2>
+    <div class="row" style="margin-bottom:10px">
+      <button class="ok" onclick="acceptAll()">Aceitar todos</button>
+      <button class="danger" onclick="rejectAll()">Descartar todos</button>
+      <span class="count" id="reviewCount"></span>
+    </div>
+    <div class="tablewrap"><table><thead><tr><th class="nosort"></th><th class="nosort">Tipo</th><th class="nosort">Gênero</th><th class="nosort">Original</th><th class="nosort">Tradução</th><th class="nosort">Notas</th><th class="nosort">Ocorrências</th><th class="nosort">Ações</th></tr></thead><tbody id="reviewBody"></tbody></table></div>
+  </section>
+
+  <section class="card">
+    <h2>3. Glossário</h2>
+    <div class="filterbar">
+      <input type="text" id="search" placeholder="Buscar (original·tradução)" style="flex:1 1 170px;min-width:150px" oninput="render()">
+      <span class="dot">•</span>
+      <div class="chips" id="typeChips"></div>
+      <span class="dot">•</span>
+      <div class="chips" id="genderChips"></div>
+      <span class="dot">•</span>
+      <button class="primary" style="white-space:nowrap" onclick="addRow()">+ Incluir termo</button>
+    </div>
+    <div class="count" id="count"></div>
+    <div class="tablewrap" id="glossWrap" style="margin-top:6px">
+      <table class="fixed"><colgroup><col style="width:112px"><col style="width:64px"><col style="width:19.4%"><col style="width:19.4%"><col><col style="width:88px"><col style="width:54px"></colgroup>
+        <thead><tr>
+          <th onclick="sortBy('type')">Tipo</th><th onclick="sortBy('gender')">Gênero</th><th onclick="sortBy('original')">Original</th>
+          <th onclick="sortBy('translation')">Tradução</th><th onclick="sortBy('notes')">Notas</th><th class="occth" id="occTh" onclick="openOccFilter(event)" title="Filtrar por arquivo">Ocorrências ▾</th><th class="nosort"></th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <details id="blockedBox" style="margin-top:12px">
+      <summary class="help" style="cursor:pointer">Termos excluídos (<span id="blockedCount">0</span>): não entram no glossário e são ignorados automaticamente nas próximas análises</summary>
+      <div class="tablewrap" style="margin-top:8px;max-height:260px">
+        <table class="fixed"><colgroup><col style="width:112px"><col><col><col style="width:88px"><col style="width:150px"></colgroup>
+        <thead><tr><th class="nosort">Tipo</th><th class="nosort">Original</th><th class="nosort">Tradução</th><th class="nosort">Excluído em</th><th class="nosort"></th></tr></thead>
+        <tbody id="blockedBody"></tbody></table>
+      </div>
+    </details>
+    <p class="help" style="text-align:center">Clique numa célula para editar. O ponto laranja indica termo editado manualmente (a IA nunca sobrescreve). Termo novo fica no topo, com contorno azul, até você sair da linha.</p>
+  </section>
+</main>
+<footer class="ft"><p>Veja mais ferramentas úteis para legendagem clicando <a href="https://matmaggi.github.io/subtools/">aqui</a>.</p></footer>
+<input type="file" id="xlsxInput" accept=".xlsx" class="hidden">
+<div class="toast" id="toast"></div>
+
+<script>
+const TYPES=['CHARACTER','LOCATION','ORGANIZATION','TITLES','PHRASE'];
+const GENDER_ORDER={M:0,F:1,'?':2,'':3};
+const TYPE_COLORS={CHARACTER:'E3F3E7',LOCATION:'EFE7FB',ORGANIZATION:'FDEBD6',TITLES:'DFF2F3',PHRASE:'FBF6D2'};
+const GENDER_COLORS={M:'CFE0FF',F:'FAD1E1','?':'E3E3E3'};
+const DEFAULT_MODELS={claude:'claude-sonnet-5-5',openai:'gpt-6-luna',gemini:'gemini-2.5-pro'};
+// preços de referência US$/1M tokens [entrada, saída] – nov/2026
+const KNOWN_PRICES={'claude-sonnet-5-5':[2,10],'gpt-6-luna':[0.1,0.5],'gemini-2.5-pro':[1.25,10]};
+const CHUNK_CHARS=45000;
+const EST_OUT_TOKENS_PER_CHUNK=6000;
+const LS='glossLeg_';
+
+let glossary=[];      // {id,type,gender,original,translation,notes,occ:[],edited}
+let pending=[];       // {id,kind:'new'|'update',item,targetId,changes}
+let files=[];         // {label,name,text}
+let sortKey=null,sortDir=1;
+let typeFilter=new Set(TYPES), genderFilter=new Set(['M','F','?','']);
+let manualChunks=[];
+let pinnedId=null;
+let blocked=[];       // termos excluídos: {original,type,gender,translation,notes,when}
+let settings={models:{},prices:{}};
+
+const $=id=>document.getElementById(id);
+const uid=()=>Math.random().toString(36).slice(2,10);
+const hide=id=>$(id).classList.add('hidden');
+const show=id=>$(id).classList.remove('hidden');
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+const usd=v=>'US$ '+(v<0.01?v.toFixed(4):v.toFixed(2));
+
+/* ---------- persistência ---------- */
+/* projetos: índice em LS+'projects' e cada projeto em LS+'proj_'+id */
+let currentId=null;
+const nowISO=()=>new Date().toISOString();
+function readIndex(){try{return JSON.parse(localStorage.getItem(LS+'projects')||'[]')}catch(e){return[]}}
+function writeIndex(ix){try{localStorage.setItem(LS+'projects',JSON.stringify(ix))}catch(e){toast('Memória do navegador cheia: exporte e apague projetos antigos.')}}
+function hasContent(){return glossary.some(g=>g.original)||pending.length||blocked.length||$('projectTitle').value.trim()||$('projectContext').value.trim()}
+function save(){
+  if(!currentId){if(!hasContent())return;currentId=uid()+uid()}
+  const data={title:$('projectTitle').value,context:$('projectContext').value,glossary,pending,blocked};
+  try{localStorage.setItem(LS+'proj_'+currentId,JSON.stringify(data))}catch(e){toast('Memória do navegador cheia: exporte e apague projetos antigos.');return}
+  const ix=readIndex();let m=ix.find(x=>x.id===currentId);
+  if(!m){m={id:currentId,created:nowISO(),exported:null};ix.push(m)}
+  m.title=data.title;m.count=glossary.filter(g=>g.original).length;m.updated=nowISO();
+  writeIndex(ix);
+}
+function currentMeta(){return currentId?readIndex().find(x=>x.id===currentId):null}
+function isDirty(){const m=currentMeta();return !!(m&&m.count&&(!m.exported||m.exported<m.updated))}
+function markExported(){const ix=readIndex(),m=ix.find(x=>x.id===currentId);if(m){m.exported=nowISO();writeIndex(ix)}}
+function saveTitle(){document.title=($('projectTitle').value?$('projectTitle').value+' · ':'')+'LexiSub';save()}
+function saveContext(){save()}
+function resetState(){
+  currentId=null;glossary=[];pending=[];blocked=[];pinnedId=null;occFilter=null;
+  $('projectTitle').value='';$('projectContext').value='';document.title='LexiSub';$('status').textContent='';
+}
+function openProject(id){
+  closeOccFilter();
+  let d;try{d=JSON.parse(localStorage.getItem(LS+'proj_'+id)||'null')}catch(e){}
+  if(!d)return toast('Projeto não encontrado na memória.');
+  resetState();currentId=id;
+  glossary=(d.glossary||[]).map(g=>{if(g.type==='WORKS')g.type='TITLES';return g});pending=d.pending||[];blocked=d.blocked||[];
+  $('projectTitle').value=d.title||'';$('projectContext').value=d.context||'';
+  document.title=(d.title?d.title+' · ':'')+'LexiSub';
+  render();renderReview();renderBlocked();toast('Projeto aberto: '+(d.title||'(sem título)'));
+}
+function deleteProject(id,ev){
+  ev.stopPropagation();
+  const m=readIndex().find(x=>x.id===id);
+  if(!confirm(`Apagar "${m?.title||'(sem título)'}" da memória deste navegador? Isso não apaga arquivos exportados.`))return;
+  try{localStorage.removeItem(LS+'proj_'+id)}catch(e){}
+  writeIndex(readIndex().filter(x=>x.id!==id));
+  if(id===currentId){resetState();render();renderReview();renderBlocked()}
+  openRecent(null,true);
+}
+const fmtDate=iso=>iso?new Date(iso).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'}):'';
+function openRecent(ev,keep){
+  if(ev)ev.stopPropagation();
+  const anchor=$('recentBtn');closeOccFilter();
+  const ix=readIndex().sort((a,b)=>(b.updated||'').localeCompare(a.updated||''));
+  const pop=document.createElement('div');pop.className='occpop';pop.id='occpop';pop.style.minWidth='320px';pop.onclick=e=>e.stopPropagation();
+  pop.innerHTML=`<b style="font-size:12px">Projetos recentes (salvos neste navegador)</b>`+(ix.length?ix.map(m=>{
+    const dirty=m.count&&(!m.exported||m.exported<m.updated);
+    return `<div class="recent${m.id===currentId?' cur':''}" onclick="openProject('${m.id}')">
+      <div style="flex:1;min-width:0"><div class="rt">${esc(m.title||'(sem título)')}</div>
+      <div class="help">${m.count||0} termos · alterado ${fmtDate(m.updated)}${dirty?' · <span style="color:var(--err)">não exportado</span>':''}</div></div>
+      <button class="small danger" title="Apagar da memória" onclick="deleteProject('${m.id}',event)">✕</button></div>`}).join(''):'<div class="help" style="margin-top:6px">Nenhum projeto salvo ainda.</div>');
+  document.body.appendChild(pop);
+  const r=anchor.getBoundingClientRect();
+  pop.style.top=(r.bottom+4)+'px';pop.style.left=Math.max(8,Math.min(r.left,innerWidth-pop.offsetWidth-8))+'px';
+}
+function migrateOld(){
+  try{
+    const g=localStorage.getItem(LS+'glossary');if(g===null||readIndex().length)return;
+    const gl=JSON.parse(g||'[]');
+    if(gl.length){
+      glossary=gl;pending=JSON.parse(localStorage.getItem(LS+'pending')||'[]');blocked=JSON.parse(localStorage.getItem(LS+'blocked')||'[]');
+      $('projectTitle').value=localStorage.getItem(LS+'title')||'';$('projectContext').value=localStorage.getItem(LS+'context')||'';
+      save();resetState();
+    }
+    ['glossary','pending','blocked','title','context'].forEach(k=>localStorage.removeItem(LS+k));
+  }catch(e){}
+}
+window.addEventListener('beforeunload',e=>{if(isDirty()){e.preventDefault();e.returnValue=''}});
+function load(){
+  migrateOld();
+  try{const s=JSON.parse(localStorage.getItem(LS+'settings')||'{}');
+    settings.models=s.models||{};if(settings.models.openai==='gpt-5')settings.models.openai='gpt-6-luna';settings.prices=s.prices||{};
+    if(s.provider)$('provider').value=s.provider; if(s.targetLang)$('targetLang').value=s.targetLang;}catch(e){}
+  onProviderChange(true);
+}
+function saveSettings(){
+  const p=$('provider').value;
+  if(p!=='manual'){
+    const m=$('model').value.trim();settings.models[p]=m;
+    settings.prices[m]=[parseFloat($('priceIn').value)||0,parseFloat($('priceOut').value)||0];
+    try{localStorage.setItem(LS+'key_'+p,$('apiKey').value.trim())}catch(e){}
+  }
+  try{localStorage.setItem(LS+'settings',JSON.stringify({provider:p,targetLang:$('targetLang').value,models:settings.models,prices:settings.prices}))}catch(e){}
+}
+function fillPrices(){
+  const m=$('model').value.trim();const pr=settings.prices[m]||KNOWN_PRICES[m];
+  $('priceIn').value=pr?pr[0]:'';$('priceOut').value=pr?pr[1]:'';
+}
+function onModelChange(){fillPrices();saveSettings();updateEstimate()}
+function onProviderChange(initial){
+  const p=$('provider').value, manual=p==='manual';
+  document.querySelectorAll('.apiOnly').forEach(e=>e.classList.toggle('hidden',manual));
+  if(!manual){$('model').value=settings.models[p]||DEFAULT_MODELS[p];let k='';try{k=localStorage.getItem(LS+'key_'+p)||''}catch(e){}$('apiKey').value=k;fillPrices()}
+  $('analyzeBtn').textContent=manual?'Gerar prompt':'Analisar legendas';
+  $('modeHint').textContent=manual?'O prompt será dividido em partes se for grande.':'';
+  if(!initial)saveSettings();
+  updateEstimate();
+}
+function forgetKey(){const p=$('provider').value;try{localStorage.removeItem(LS+'key_'+p)}catch(e){}$('apiKey').value='';toast('Chave removida deste navegador')}
+function newProject(){
+  if(isDirty()&&!confirm('Este projeto tem alterações que ainda não foram exportadas para o seu computador. Ele continua em "Projetos Recentes", mas recomendamos exportar. Começar um projeto novo mesmo assim?'))return;
+  resetState();files=[];renderFiles();render();renderReview();renderBlocked();
+}
+
+/* ---------- custo ---------- */
+const estTokens=chars=>Math.ceil(chars/4);
+function updateEstimate(){
+  if($('provider').value==='manual')return;
+  const box=$('costBox');
+  if(!files.length){box.textContent='Carregue legendas para ver o custo estimado.';return}
+  const chunks=buildChunks();
+  const inTok=chunks.reduce((s,c,i)=>s+estTokens(buildPrompt(c,i,chunks.length).length),0);
+  const outTok=chunks.length*EST_OUT_TOKENS_PER_CHUNK;
+  const pi=parseFloat($('priceIn').value)||0,po=parseFloat($('priceOut').value)||0;
+  const cost=inTok/1e6*pi+outTok/1e6*po;
+  box.innerHTML=`<b>Custo estimado:</b> ~${usd(cost)} &nbsp;·&nbsp; ${chunks.length} parte(s), ~${inTok.toLocaleString('pt-BR')} tokens de entrada + ~${outTok.toLocaleString('pt-BR')} de saída`+(pi||po?'':' <span class="help">(preencha os preços para calcular)</span>');
+}
+
+/* ---------- legendas ---------- */
+async function loadSubs(list){
+  for(const f of list){
+    if(!/\.(srt|dfxp|pxtt|ttml|ttal|xml)$/i.test(f.name)){toast('Formato não suportado: '+f.name);continue}
+    const raw=await f.text();
+    let text;
+    try{text=/\.srt$/i.test(f.name)?parseSRT(raw):/\.ttal$/i.test(f.name)?parseTTAL(raw):parseTTML(raw)}catch(err){toast('Não consegui ler '+f.name);continue}
+    files.push({label:episodeLabel(f.name),name:f.name,text,chars:window._ttalChars||[]});window._ttalChars=null;
+  }
+  renderFiles();
+}
+$('subFiles').addEventListener('change',async e=>{await loadSubs(e.target.files);e.target.value=''});
+(()=>{const zone=document.querySelector('.grid2>section');const dz=$('dropzone');
+  ['dragenter','dragover'].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('drop')}));
+  ['dragleave','drop'].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();if(ev==='dragleave'&&zone.contains(e.relatedTarget))return;dz.classList.remove('drop')}));
+  zone.addEventListener('drop',e=>loadSubs(e.dataTransfer.files));
+  window.addEventListener('dragover',e=>e.preventDefault());window.addEventListener('drop',e=>e.preventDefault());})();
+function episodeLabel(n){const m=n.match(/S(\d{1,2})\s*E(\d{1,3})/i)||n.match(/(\d{1,2})x(\d{1,3})/i);
+  if(m)return 'S'+m[1].padStart(2,'0')+'E'+m[2].padStart(2,'0');const e=n.match(/E(?:p(?:isode)?)?[\s._-]?(\d{1,3})/i);return e?'E'+e[1].padStart(2,'0'):n.replace(/\.[^.]+$/,'')}
+function cleanLine(s){
+  return s.replace(/\{[^}]*\}/g,'')
+    .replace(/<[^>]+>/g,'')
+    .replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'")
+    .replace(/^\s*[-–—]\s*/,'')
+    .replace(/^\s*[A-Z][A-Z0-9 .'-]{1,30}:\s+/,'')
+    .replace(/\[[^\]]*\]|\([A-Z][A-Z\s]+\)/g,'')
+    .replace(/[♪♫]/g,'').replace(/\s+/g,' ').trim();
+}
+function parseSRT(raw){
+  const out=[];
+  for(const block of raw.replace(/\r/g,'').split(/\n\s*\n/)){
+    const lines=block.split('\n').filter(l=>l.trim()&&!/^\d+$/.test(l.trim())&&!/-->/.test(l));
+    const t=lines.map(l=>l.split(/(?=\s-\s)/).map(cleanLine).join(' ')).join(' ').replace(/\s+/g,' ').trim();
+    if(t)out.push(t);
+  }
+  return out.join('\n');
+}
+function parseTTML(raw){
+  const doc=new DOMParser().parseFromString(raw,'application/xml');
+  const ps=doc.getElementsByTagNameNS('*','p');const out=[];
+  for(const p of ps){
+    const parts=[];
+    (function walk(n){for(const c of n.childNodes){if(c.nodeType===3)parts.push(c.nodeValue);else if(c.localName==='br')parts.push('\n');else if(c.localName!=='metadata')walk(c)}})(p);
+    const t=parts.join('').split('\n').map(cleanLine).filter(Boolean).join(' ');
+    if(t)out.push(t);
+  }
+  return out.join('\n');
+}
+function parseTTAL(raw){
+  const d=JSON.parse(raw);
+  window._ttalChars=Object.values(d.characters||{}).map(c=>c.name).filter(Boolean);
+  return Object.values(d.events||{}).sort((a,b)=>(a.start||0)-(b.start||0))
+    .map(e=>String(e.txt||e.transcriptionText||'').split('\n').map(cleanLine).filter(Boolean).join(' '))
+    .filter(Boolean).join('\n');
+}
+function clearFiles(){files=[];renderFiles()}
+function renderFiles(){
+  $('fileList').innerHTML=files.length?files.map(f=>`<span title="${esc(f.name)}">${esc(f.label)} · ${f.text.split('\n').length} falas</span>`).join(''):'Nenhuma legenda carregada.';
+  $('dzSub').textContent=files.length?`${files.length} arquivo(s) carregado(s) — clique ou arraste para adicionar mais`:'Nenhum arquivo escolhido (SRT, DFXP, PXTT, TTML ou TTAL)';
+  $('cleanPreview').value=files.map(f=>'### '+f.label+'\n'+f.text).join('\n\n');
+  updateEstimate();
+}
+
+/* ---------- prompt ---------- */
+function buildChunks(){
+  const chunks=[];let cur='';
+  for(const f of files){
+    const lines=('### '+f.label+'\n'+f.text).split('\n');
+    for(const l of lines){if(cur.length+l.length>CHUNK_CHARS&&cur){chunks.push(cur);cur='### '+f.label+' (continuação)\n'}cur+=l+'\n'}
+  }
+  if(cur.trim())chunks.push(cur);
+  return chunks;
+}
+function existingSummary(){
+  if(!glossary.length)return '';
+  return '\n\nGLOSSÁRIO EXISTENTE (não repita estes termos; só inclua um deles de novo, com "update": true, se o diálogo revelar o gênero de um CHARACTER que está "?"):\n'+
+    glossary.map(g=>`${g.type} | ${g.gender||'-'} | ${g.original} → ${g.translation}`).join('\n');
+}
+function blockedHint(){
+  return blocked.length?`\n\nTERMOS JÁ RECUSADOS (nunca sugira estes):\n${blocked.map(b=>b.original).join(', ')}`:'';
+}
+function charHint(){
+  const n=[...new Set(files.flatMap(f=>f.chars||[]))];
+  return n.length?`PERSONAGENS LISTADOS NOS METADADOS DO ARQUIVO (use como pista de nomes e gênero; inclua só os que aparecem nos diálogos):\n${n.join(', ')}\n\n`:'';
+}
+function buildPrompt(chunk,i,n){
+  const lang=$('targetLang').value||'português do Brasil';
+  return `Você é especialista em localização de legendas do inglês para ${lang}. Analise os diálogos abaixo (já limpos de formatação) e monte um glossário para garantir consistência na tradução.${n>1?`\nEsta é a PARTE ${i+1} de ${n} do material; analise só esta parte.`:''}
+
+REGRAS
+1. Tipos permitidos: CHARACTER, LOCATION, ORGANIZATION, TITLES, PHRASE.
+   - CHARACTER: TODOS os nomes de personagens citados, mesmo com gênero desconhecido. Nome e apelido em entradas SEPARADAS; no apelido, escreva em notes "apelido de <nome>" e use o mesmo gênero. Se um nome aparece com honorífico (Mr., Mrs., Ms., Miss, Dr., Prof., Detective, Captain etc.), crie uma entrada com o honorífico e traduza-o respeitando o gênero (ex.: "Dr. Hale" → "Dra. Hale" se for mulher).
+   - LOCATION: lugares citados.
+   - ORGANIZATION: empresas, instituições, órgãos, equipes, grupos.
+   - TITLES: títulos de obras citadas (livros, filmes, séries, animes, mangás, histórias em quadrinhos, músicas, programas, jogos, quadros/pinturas, peças de teatro).
+   - PHRASE: termos, gírias, jargões, bordões e expressões recorrentes ou ambíguos que ajudem a manter a consistência.
+2. Inclua SOMENTE termos que aparecem literalmente no texto.
+3. "original": exatamente como no inglês, mas no SINGULAR quando for substantivo (mesmo que a legenda use o plural). Use inicial maiúscula apenas se for nome próprio ou se a grafia exigir; caso contrário, comece com minúscula.
+4. "translation": sugestão em ${lang} coerente com o contexto de todo o material; mesma regra de maiúsculas. Se o termo deve ficar igual ao inglês, repita o termo em inglês. NUNCA deixe em branco.
+5. "gender": para CHARACTER use "M", "F" ou "?" (se o diálogo não permitir saber; procure pronomes, adjetivos, títulos e formas de tratamento). Para os demais tipos use "M" ou "F" apenas quando for relevante para a concordância em português (ex.: "a Interpol"), senão "".
+6. Não repita o mesmo "original" em mais de um tipo.
+7. "notes": em português, explique o contexto, a justificativa da tradução, alternativas ou alertas (ex.: "trocadilho com…", "chamado de X pelo irmão"). Pode ficar vazio se não houver nada útil.${$('projectContext').value.trim()?'\n\nCONTEXTO DO PROJETO (informado pelo tradutor):\n'+$('projectContext').value.trim():''}
+
+FORMATO DA RESPOSTA
+Responda APENAS com um array JSON válido, sem texto antes ou depois, neste formato:
+[{"type":"CHARACTER","gender":"F","original":"Dr. Hale","translation":"Dra. Hale","notes":"médica da protagonista"}]
+
+${charHint()}DIÁLOGOS
+${chunk}`;
+}
+
+/* ---------- chamadas de API ---------- */
+async function callAI(prompt){
+  const p=$('provider').value,key=$('apiKey').value.trim(),model=$('model').value.trim()||DEFAULT_MODELS[p];
+  if(!key)throw new Error('Informe a chave de API.');
+  let r,j;
+  if(p==='claude'){
+    r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model,max_tokens:16000,messages:[{role:'user',content:prompt}]})});
+    j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+    return {text:j.content.filter(c=>c.type==='text').map(c=>c.text).join(''),inTok:j.usage?.input_tokens||0,outTok:j.usage?.output_tokens||0};
+  }
+  if(p==='openai'){
+    r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+key},
+      body:JSON.stringify({model,messages:[{role:'user',content:prompt}]})});
+    j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+    return {text:j.choices[0].message.content,inTok:j.usage?.prompt_tokens||0,outTok:j.usage?.completion_tokens||0};
+  }
+  if(p==='gemini'){
+    r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`,{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseMimeType:'application/json'}})});
+    j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+    const u=j.usageMetadata||{};
+    return {text:j.candidates[0].content.parts.map(x=>x.text).join(''),inTok:u.promptTokenCount||0,outTok:(u.candidatesTokenCount||0)+(u.thoughtsTokenCount||0)};
+  }
+}
+function parseJSONArray(txt){
+  const a=txt.indexOf('['),b=txt.lastIndexOf(']');
+  if(a<0||b<a)throw new Error('A resposta não contém um array JSON.');
+  return JSON.parse(txt.slice(a,b+1));
+}
+
+/* ---------- análise ---------- */
+function setProgress(f,msg){$('prog').style.display=f==null?'none':'block';$('prog').firstElementChild.style.width=((f||0)*100)+'%';if(msg!=null)$('status').textContent=msg}
+async function analyze(){
+  if(!files.length)return toast('Carregue ao menos uma legenda.');
+  saveSettings();
+  const chunks=buildChunks();
+  if($('provider').value==='manual'){
+    manualChunks=chunks;
+    $('manualParts').innerHTML=chunks.map((c,i)=>`<div class="part"><b>Parte ${i+1} de ${chunks.length}</b>
+      <div class="row" style="margin:6px 0"><button class="small" onclick="copyPart(${i})">Copiar prompt</button></div>
+      <textarea id="mp${i}" readonly style="min-height:60px">${esc(buildPrompt(c,i,chunks.length))}</textarea>
+      <label style="margin-top:6px">Cole aqui a resposta da IA:</label><textarea id="mr${i}" style="min-height:80px"></textarea></div>`).join('');
+    show('manualBox');$('manualBox').scrollIntoView({behavior:'smooth'});return;
+  }
+  $('analyzeBtn').disabled=true;const all=[];let inT=0,outT=0;
+  try{
+    for(let i=0;i<chunks.length;i++){
+      setProgress(i/chunks.length,`Analisando parte ${i+1} de ${chunks.length}…`);
+      const res=await callAI(buildPrompt(chunks[i],i,chunks.length));
+      inT+=res.inTok;outT+=res.outTok;
+      all.push(...parseJSONArray(res.text));
+    }
+    setProgress(1,'');ingest(all);
+    const pi=parseFloat($('priceIn').value)||0,po=parseFloat($('priceOut').value)||0;
+    $('status').textContent+=`\nCusto real desta análise: ${usd(inT/1e6*pi+outT/1e6*po)} (${inT.toLocaleString('pt-BR')} tokens de entrada + ${outT.toLocaleString('pt-BR')} de saída).`;
+  }catch(e){setProgress(null,'Erro: '+e.message)}
+  finally{$('analyzeBtn').disabled=false;setTimeout(()=>$('prog').style.display='none',800)}
+}
+function copyPart(i){navigator.clipboard.writeText($('mp'+i).value);toast('Parte '+(i+1)+' copiada')}
+function processManual(){
+  const all=[];
+  try{manualChunks.forEach((c,i)=>{const v=$('mr'+i).value.trim();if(v)all.push(...parseJSONArray(v))})}
+  catch(e){return toast('Erro ao ler a resposta: '+e.message)}
+  if(!all.length)return toast('Cole ao menos uma resposta.');
+  hide('manualBox');ingest(all);
+}
+
+/* ---------- verificação no texto (singular/plural) ---------- */
+function variants(term){
+  const words=term.trim().split(/\s+/);const last=words.pop();const pre=words.length?words.join(' ')+' ':'';
+  const v=new Set([last]);const l=last.toLowerCase();
+  v.add(last+'s');v.add(last+'es');v.add(last+"'s");v.add(last+"’s");v.add(last+"s'");
+  if(/[^aeiou]y$/i.test(last))v.add(last.slice(0,-1)+'ies');
+  if(/fe?$/i.test(last))v.add(last.replace(/fe?$/i,'ves'));
+  if(/man$/i.test(last))v.add(last.replace(/man$/i,'men'));
+  if(/s$/i.test(last)&&l.length>3){v.add(last.slice(0,-1));}
+  const irregular={child:'children',person:'people',mouse:'mice',foot:'feet',tooth:'teeth',goose:'geese'};
+  if(irregular[l])v.add(irregular[l]);
+  return [...v].map(x=>pre+x);
+}
+function reEsc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+function findEpisodes(term){
+  if(!term)return[];
+  const alts=variants(term).map(v=>reEsc(v).replace(/\s+/g,'\\s+')).join('|');
+  const re=new RegExp(`(?<![\\p{L}\\p{N}])(?:${alts})(?![\\p{L}\\p{N}])`,'iu');
+  return [...new Set(files.filter(f=>re.test(f.text)).map(f=>f.label))];
+}
+
+/* ---------- mesclar resultado ---------- */
+const keyOf=s=>String(s||'').trim().toLowerCase();
+function normItem(o){
+  let type=String(o.type||'').toUpperCase().trim();if(type==='TITLE'||type==='WORK'||type==='WORKS')type='TITLES';if(type==='CHARACTERS')type='CHARACTER';if(type==='LOCATIONS')type='LOCATION';if(type==='ORGANIZATIONS')type='ORGANIZATION';if(type==='PHRASES')type='PHRASE';
+  if(!TYPES.includes(type))type='PHRASE';
+  let gender=String(o.gender||'').toUpperCase().trim();if(!['M','F','?'].includes(gender))gender='';
+  if(type==='CHARACTER'&&!gender)gender='?';
+  const original=String(o.original||'').trim();
+  let translation=String(o.translation||'').trim();if(!translation)translation=original;
+  return {id:uid(),type,gender,original,translation,notes:String(o.notes||'').trim(),occ:[],edited:false,update:!!o.update};
+}
+function dedupe(items){
+  const m=new Map();
+  for(const it of items){
+    const k=keyOf(it.original);if(!k)continue;
+    if(!m.has(k)){m.set(k,it);continue}
+    const a=m.get(k);
+    if((a.gender==='?'||!a.gender)&&it.gender&&it.gender!=='?')a.gender=it.gender;
+    if(it.notes&&!a.notes.includes(it.notes))a.notes=a.notes?a.notes+' / '+it.notes:it.notes;
+    a.update=a.update||it.update;
+  }
+  return [...m.values()];
+}
+function ingest(raw){
+  let items=dedupe(raw.map(normItem));
+  let discarded=0,skipped=0;
+  items=items.filter(it=>{if(isBlocked(it.original)){skipped++;return false}return true});
+  items=items.filter(it=>{it.occ=findEpisodes(it.original);if(!it.occ.length){discarded++;return false}return true});
+  for(const g of glossary){const eps=findEpisodes(g.original);g.occ=[...new Set([...(g.occ||[]),...eps])].sort()}
+  const firstRun=!glossary.length;
+  let added=0,suggested=0;
+  for(const it of items){
+    const ex=glossary.find(g=>keyOf(g.original)===keyOf(it.original));
+    if(ex){
+      if(ex.edited)continue;
+      const changes={};
+      if(ex.type==='CHARACTER'&&(ex.gender==='?'||!ex.gender)&&it.gender&&it.gender!=='?')changes.gender=it.gender;
+      if(Object.keys(changes).length&&!pending.some(p=>p.targetId===ex.id)){pending.push({id:uid(),kind:'update',targetId:ex.id,item:{...ex,...changes,notes:it.notes||ex.notes},changes});suggested++}
+      continue;
+    }
+    if(pending.some(p=>p.kind==='new'&&keyOf(p.item.original)===keyOf(it.original)))continue;
+    delete it.update;
+    if(firstRun){glossary.push(it)}else{pending.push({id:uid(),kind:'new',item:it});}
+    added++;
+  }
+  save();render();renderReview();
+  $('status').textContent=(firstRun?`${added} termos adicionados ao glossário.`:`${added} termos novos e ${suggested} sugestões de atualização aguardando revisão.`)+(discarded?` ${discarded} descartados por não aparecerem nas legendas.`:'')+(skipped?` ${skipped} ignorados por já estarem na lista de excluídos.`:'');
+  if(pending.length)$('review').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- ocorrências ---------- */
+const isEpLabel=l=>/^(S\d{2})?E\d{2,3}$/.test(l);
+function occHTML(list){
+  return (list||[]).map(l=>isEpLabel(l)||l.length<=4?esc(l):`<span class="occ-ico" title="${esc(l)}"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M4 1.5h5l3.5 3.5v9.5h-8.5z"/><path d="M9 1.5V5h3.5M6 8.5h4.5M6 11h4.5"/></svg></span>`).join(', ');
+}
+let occFilter=null; // null = todos; Set de rótulos
+function allOccLabels(){return [...new Set(glossary.flatMap(g=>g.occ||[]))].sort((a,b)=>coll.compare(a,b))}
+function openOccFilter(ev){
+  ev.stopPropagation();closeOccFilter();
+  const labels=allOccLabels();
+  const pop=document.createElement('div');pop.className='occpop';pop.id='occpop';pop.onclick=e=>e.stopPropagation();
+  pop.innerHTML=labels.length?`<b style="font-size:12px">Mostrar termos de:</b>`+labels.map(l=>`<label><input type="checkbox" value="${esc(l)}" ${!occFilter||occFilter.has(l)?'checked':''}> ${esc(l)}</label>`).join('')+`<label style="border-top:1px solid var(--bd);padding-top:4px"><input type="checkbox" value="__EMPTY__" ${!occFilter||occFilter.has('__EMPTY__')?'checked':''}> <i>(vazio – sem ocorrência)</i></label>`+
+    `<div class="row"><button class="small" onclick="occAll(true)">Todos</button><button class="small" onclick="occAll(false)">Nenhum</button><button class="small primary" onclick="applyOccFilter()">Aplicar</button></div>`
+    :'<span class="help">Nenhuma ocorrência registrada ainda.</span>';
+  document.body.appendChild(pop);
+  const r=ev.currentTarget.getBoundingClientRect();
+  pop.style.top=(r.bottom+4)+'px';pop.style.left=Math.max(8,Math.min(r.left,innerWidth-pop.offsetWidth-8))+'px';
+}
+function occAll(v){document.querySelectorAll('#occpop input').forEach(i=>i.checked=v)}
+function applyOccFilter(){
+  const all=document.querySelectorAll('#occpop input'),sel=[...all].filter(i=>i.checked).map(i=>i.value);
+  occFilter=sel.length===all.length?null:new Set(sel);closeOccFilter();render();
+}
+function closeOccFilter(){const p=$('occpop');if(p)p.remove()}
+document.addEventListener('click',closeOccFilter);
+
+/* ---------- termos excluídos ---------- */
+const isBlocked=o=>blocked.some(b=>keyOf(b.original)===keyOf(o));
+function block(it){
+  if(!it||!it.original||isBlocked(it.original))return;
+  blocked.push({original:it.original,type:it.type,gender:it.gender||'',translation:it.translation||'',notes:it.notes||'',when:new Date().toLocaleDateString('pt-BR')});
+}
+function renderBlocked(){
+  $('blockedCount').textContent=blocked.length;
+  const list=[...blocked].sort((a,b)=>coll.compare(a.original,b.original));
+  $('blockedBody').innerHTML=list.length?list.map(b=>`<tr class="t-${b.type}"><td>${esc(b.type)}</td><td>${esc(b.original)}</td><td>${esc(b.translation)}</td><td class="occ">${esc(b.when||'')}</td>
+    <td class="act"><button class="small" onclick="restoreBlocked('${esc(b.original).replace(/'/g,"\\'")}')">Restaurar</button> <button class="small danger" onclick="unblock('${esc(b.original).replace(/'/g,"\\'")}')" title="Tira da lista; a IA poderá sugerir de novo">Liberar</button></td></tr>`).join('')
+    :'<tr><td colspan="5" class="help" style="text-align:center">Nenhum termo excluído.</td></tr>';
+}
+function unblock(o){blocked=blocked.filter(b=>keyOf(b.original)!==keyOf(o));save();renderBlocked()}
+function restoreBlocked(o){
+  const b=blocked.find(x=>keyOf(x.original)===keyOf(o));if(!b)return;
+  if(!glossary.some(g=>keyOf(g.original)===keyOf(o))){
+    const it=normItem(b);delete it.update;it.occ=files.length?findEpisodes(it.original):[];glossary.push(it);
+  }
+  unblock(o);render();toast('Termo restaurado no glossário');
+}
+
+/* ---------- revisão ---------- */
+function renderReview(){
+  if(!pending.length){hide('review');return}
+  show('review');
+  $('reviewCount').textContent=`${pending.filter(p=>p.kind==='new').length} novos · ${pending.filter(p=>p.kind==='update').length} atualizações`;
+  const ordered=[...pending].sort((a,b)=>(TYPES.indexOf(a.item.type)-TYPES.indexOf(b.item.type))||coll.compare(a.item.original,b.item.original));
+  let prevT=null;
+  $('reviewBody').innerHTML=ordered.map(p=>{
+    const it=p.item,isU=p.kind==='update';const g=it.gender==='?'?'Q':it.gender;
+    const old=isU?glossary.find(x=>x.id===p.targetId):null;
+    const sep=prevT!==null&&it.type!==prevT;prevT=it.type;
+    return `<tr class="t-${it.type}${isU?' upd':''}${sep?' sep':''}" data-pid="${p.id}">
+      <td><b style="font-size:11px">${isU?'ATUALIZAR':'NOVO'}</b></td>
+      <td>${typeSelect(it.type)}</td>
+      <td class="g-${g}${isU&&p.changes.gender?' diff':''}">${genderSelect(it.gender)}${isU&&old?` <span class="help">(era ${esc(old.gender||'vazio')})</span>`:''}</td>
+      <td contenteditable data-f="original">${esc(it.original)}</td>
+      <td contenteditable data-f="translation">${esc(it.translation)}</td>
+      <td contenteditable data-f="notes" class="notes">${esc(it.notes)}</td>
+      <td class="occ">${occHTML(it.occ)}</td>
+      <td class="act"><button class="small ok" onclick="acceptOne('${p.id}')">Aceitar</button> <button class="small danger" onclick="rejectOne('${p.id}')">Excluir</button></td></tr>`}).join('');
+}
+function acceptOne(pid,silent){
+  const i=pending.findIndex(p=>p.id===pid);if(i<0)return;const p=pending[i];
+  if(p.kind==='update'){const g=glossary.find(x=>x.id===p.targetId);if(g)Object.assign(g,{type:p.item.type,gender:p.item.gender,original:p.item.original,translation:p.item.translation,notes:p.item.notes})}
+  else glossary.push(p.item);
+  pending.splice(i,1);if(!silent){save();render();renderReview()}
+}
+function rejectOne(pid){const p=pending.find(x=>x.id===pid);if(p&&p.kind==='new')block(p.item);pending=pending.filter(p=>p.id!==pid);renderBlocked();save();renderReview()}
+function acceptAll(){[...pending].forEach(p=>acceptOne(p.id,true));save();render();renderReview();toast('Termos aceitos')}
+function rejectAll(){if(!confirm('Descartar todos os itens em revisão? Os termos novos irão para a lista de excluídos e não serão sugeridos de novo.'))return;pending.forEach(p=>{if(p.kind==='new')block(p.item)});pending=[];renderBlocked();save();renderReview()}
+
+/* ---------- tabela ---------- */
+function typeSelect(v){return `<select data-f="type">${TYPES.map(t=>`<option${t===v?' selected':''}>${t}</option>`).join('')}</select>`}
+function genderSelect(v){return `<select data-f="gender">${['','M','F','?'].map(g=>`<option value="${g}"${g===v?' selected':''}>${g}</option>`).join('')}</select>`}
+function buildChips(){
+  const allT=typeFilter.size===TYPES.length, allG=genderFilter.size===4;
+  $('typeChips').innerHTML=`<span class="chip${allT?' all':''}" onclick="setAll('t')">ALL</span>`+
+    TYPES.map(t=>`<span class="chip${!allT&&!typeFilter.has(t)?' off':''}" style="background:var(--${t})" onclick="toggleF('t','${t}')">${t}</span>`).join('');
+  $('genderChips').innerHTML=`<span class="chip${allG?' all':''}" onclick="setAll('g')">ALL</span>`+
+    [['M','M'],['F','F'],['?','Q'],['','']].map(([g,c])=>`<span class="chip${!allG&&!genderFilter.has(g)?' off':''}" style="background:${c?'var(--'+c+')':'var(--card)'}" onclick="toggleF('g','${g}')">${g||'sem gênero'}</span>`).join('');
+}
+function setAll(k){if(k==='t')typeFilter=new Set(TYPES);else genderFilter=new Set(['M','F','?','']);render()}
+function toggleF(k,v){
+  const full=k==='t'?TYPES.length:4;let s=k==='t'?typeFilter:genderFilter;
+  if(s.size===full){s=new Set([v])}                  // 1º clique: só ele
+  else if(s.has(v)){s.delete(v);if(!s.size)s=new Set(k==='t'?TYPES:['M','F','?',''])}
+  else s.add(v);
+  if(k==='t')typeFilter=s;else genderFilter=s;render();
+}
+function sortBy(k){if(sortKey===k)sortDir=-sortDir;else{sortKey=k;sortDir=1}render()}
+const coll=new Intl.Collator('pt',{sensitivity:'base'});
+function defaultCmp(a,b){
+  const d=TYPES.indexOf(a.type)-TYPES.indexOf(b.type);if(d)return d;
+  if(a.type==='CHARACTER'){const gd=(GENDER_ORDER[a.gender||'']??3)-(GENDER_ORDER[b.gender||'']??3);if(gd)return gd}
+  return coll.compare(a.original,b.original);
+}
+function sorted(list){
+  return [...list].sort((a,b)=>{
+    if(a.id===pinnedId)return -1;if(b.id===pinnedId)return 1;
+    if(!sortKey)return defaultCmp(a,b);
+    const val=x=>sortKey==='occ'?(x.occ||[]).join(','):sortKey==='type'?String(TYPES.indexOf(x.type)):sortKey==='gender'?String(GENDER_ORDER[x.gender||'']??3):x[sortKey]||'';
+    return (coll.compare(val(a),val(b))*sortDir)||defaultCmp(a,b);
+  });
+}
+function render(){
+  buildChips();
+  const q=$('search').value.trim().toLowerCase();
+  const rows=sorted(glossary).filter(g=>g.id===pinnedId||(typeFilter.has(g.type)&&genderFilter.has(g.gender||'')&&(!occFilter||((g.occ||[]).length?(g.occ||[]).some(o=>occFilter.has(o)):occFilter.has('__EMPTY__')))&&(!q||[g.original,g.translation].some(x=>(x||'').toLowerCase().includes(q)))));
+  $('count').textContent=`${rows.length} de ${glossary.length} termos`+(occFilter?` · filtro de ocorrências ativo`:'');
+  $('occTh').classList.toggle('active',!!occFilter);
+  let prev=null;
+  $('tbody').innerHTML=rows.map(g=>{
+    const gc=g.gender==='?'?'Q':g.gender;
+    const sep=prev!==null&&g.type!==prev&&g.id!==pinnedId;prev=g.type;
+    return `<tr class="t-${g.type}${sep?' sep':''}${g.id===pinnedId?' pinned':''}" data-id="${g.id}">
+    <td>${typeSelect(g.type)}</td>
+    <td class="g-${gc}">${genderSelect(g.gender)}</td>
+    <td contenteditable data-f="original">${esc(g.original)}</td>
+    <td contenteditable data-f="translation">${esc(g.translation)}</td>
+    <td contenteditable data-f="notes" class="notes">${esc(g.notes)}</td>
+    <td class="occ">${occHTML(g.occ)}</td>
+    <td class="act">${g.edited?'<span class="edited-dot" title="Editado manualmente"></span>':''}<button class="small danger" title="Excluir linha" onclick="delRow('${g.id}')">✕</button></td></tr>`}).join('');
+}
+function findTarget(el){
+  const tr=el.closest('tr');if(!tr)return null;
+  if(tr.dataset.pid){const p=pending.find(x=>x.id===tr.dataset.pid);return p&&{obj:p.item,review:true,tr}}
+  const g=glossary.find(x=>x.id===tr.dataset.id);return g&&{obj:g,review:false,tr};
+}
+// re-renderiza só quando o foco sai da linha, para não "reembaralhar" durante a edição
+function maybeRerender(t,next){
+  if(t.review){renderReview();return}
+  if(next&&t.tr.contains(next))return;
+  if(t.obj.id===pinnedId){
+    if(!t.obj.original){return}           // linha nova ainda vazia: continua no topo
+    pinnedId=null;
+  }
+  render();
+}
+document.addEventListener('change',e=>{
+  if(e.target.tagName!=='SELECT'||!e.target.dataset.f)return;const t=findTarget(e.target);if(!t)return;
+  t.obj[e.target.dataset.f]=e.target.value;if(!t.review)t.obj.edited=true;
+  if(t.obj.type==='CHARACTER'&&!t.obj.gender)t.obj.gender='?';
+  // atualiza só o visual da linha
+  t.tr.className=t.tr.className.replace(/t-\w+/,'t-'+t.obj.type);
+  const gtd=t.tr.querySelector('select[data-f="gender"]').closest('td');gtd.className=gtd.className.replace(/\bg-\w*/g,'').trim()+' g-'+(t.obj.gender==='?'?'Q':t.obj.gender);
+  t.tr.querySelector('select[data-f="gender"]').value=t.obj.gender;
+  save();
+});
+document.addEventListener('focusout',e=>{
+  const el=e.target,next=e.relatedTarget;const t=el.closest&&findTarget(el);if(!t)return;
+  if(el.isContentEditable&&el.dataset.f){
+    const v=el.innerText.replace(/\s+/g,' ').trim();const f=el.dataset.f;
+    if(t.obj[f]!==v){
+      if(f==='original'&&v&&glossary.some(g=>g!==t.obj&&keyOf(g.original)===keyOf(v))){toast('Este termo já existe no glossário.');el.innerText=t.obj[f];return}
+      t.obj[f]=v;if(!t.review)t.obj.edited=true;
+      if(f==='original'&&files.length)t.obj.occ=findEpisodes(v);
+      save();
+    }
+  }
+  // ao sair da linha: tradução vazia vira o original
+  if(!(next&&t.tr.contains(next))&&!t.obj.translation&&t.obj.original){t.obj.translation=t.obj.original;save()}
+  maybeRerender(t,next);
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.isContentEditable){e.preventDefault();e.target.blur()}});
+function addRow(){
+  if(pinnedId){const p=glossary.find(g=>g.id===pinnedId);if(p&&!p.original){glossary=glossary.filter(g=>g.id!==pinnedId)}}
+  const g={id:uid(),type:'PHRASE',gender:'',original:'',translation:'',notes:'',occ:[],edited:true};
+  glossary.push(g);pinnedId=g.id;render();
+  const td=document.querySelector(`tr[data-id="${g.id}"] td[data-f="original"]`);
+  if(td){td.scrollIntoView({block:'center'});td.focus()}
+  save();
+}
+function delRow(id){
+  const g=glossary.find(x=>x.id===id);
+  if(g&&g.original&&!confirm(`Excluir "${g.original}"? Ele vai para a lista de termos excluídos e não será sugerido de novo.`))return;
+  if(id===pinnedId)pinnedId=null;
+  if(g&&g.original)block(g);
+  glossary=glossary.filter(x=>x.id!==id);save();render();renderBlocked();
+}
+
+/* ---------- XLSX ---------- */
+function safeName(s){return (s||'').replace(/[\\/:*?"<>|]+/g,'').trim()}
+function exportXlsx(){
+  const list=glossary.filter(g=>g.original);
+  if(!list.length)return toast('O glossário está vazio.');
+  const head=['Tipo','Gênero','Original','Tradução','Notas','Ocorrências','Editado'];
+  const saveKey=sortKey;sortKey=null;const ord=sorted(list);sortKey=saveKey;
+  const rows=ord.map(g=>[g.type,g.gender||'',g.original,g.translation||g.original,g.notes||'',(g.occ||[]).join(', '),g.edited?'Sim':'']);
+  const ws=XLSX.utils.aoa_to_sheet([head,...rows]);
+  const thin={style:'thin',color:{rgb:'D0D0D0'}},thick={style:'medium',color:{rgb:'6B7078'}};
+  head.forEach((_,c)=>{const a=XLSX.utils.encode_cell({r:0,c});ws[a].s={font:{bold:true,color:{rgb:'FFFFFF'}},fill:{fgColor:{rgb:'1F2328'}},border:{top:thin,bottom:thin,left:thin,right:thin}}});
+  rows.forEach((r,i)=>{
+    const sep=i>0&&rows[i-1][0]!==r[0];
+    r.forEach((_,c)=>{const a=XLSX.utils.encode_cell({r:i+1,c});if(!ws[a])ws[a]={t:'s',v:''};
+      let fill=TYPE_COLORS[r[0]]||'FFFFFF';if(c===1&&GENDER_COLORS[r[1]])fill=GENDER_COLORS[r[1]];
+      ws[a].s={fill:{fgColor:{rgb:fill}},border:{top:sep?thick:thin,bottom:thin,left:thin,right:thin},alignment:{vertical:'top',wrapText:c===4},font:c===1?{bold:true}:{}}})});
+  ws['!cols']=[{wch:15},{wch:8},{wch:28},{wch:28},{wch:60},{wch:20},{wch:9}];
+  ws['!autofilter']={ref:XLSX.utils.encode_range({s:{r:0,c:0},e:{r:rows.length,c:head.length-1}})};
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Glossário');
+  const title=$('projectTitle').value.trim();
+  const info=XLSX.utils.aoa_to_sheet([['Projeto',title],['Contexto',$('projectContext').value],['Exportado em',new Date().toLocaleString('pt-BR')]]);
+  XLSX.utils.book_append_sheet(wb,info,'Info');
+  const bws=XLSX.utils.aoa_to_sheet([['Tipo','Gênero','Original','Tradução','Notas','Excluído em'],...blocked.map(b=>[b.type,b.gender||'',b.original,b.translation||'',b.notes||'',b.when||''])]);
+  bws['!cols']=[{wch:15},{wch:8},{wch:28},{wch:28},{wch:40},{wch:12}];
+  XLSX.utils.book_append_sheet(wb,bws,'Excluídos');
+  wb.Props={Title:title};
+  save();XLSX.writeFile(wb,`${safeName(title)||'Glossario'} [KNP].xlsx`);markExported();
+}
+function importXlsx(){$('xlsxInput').click()}
+$('xlsxInput').addEventListener('change',async e=>{
+  const f=e.target.files[0];e.target.value='';if(!f)return;
+  const wb=XLSX.read(await f.arrayBuffer(),{type:'array'});
+  const sheetName=wb.SheetNames.find(n=>/gloss/i.test(n))||wb.SheetNames.find(n=>!/^(info|exclu)/i.test(n))||wb.SheetNames[0];
+  const rows=XLSX.utils.sheet_to_json(wb.Sheets[sheetName],{defval:''});
+  const norm=k=>k.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().trim();
+  const pick=(r,...names)=>{for(const k of Object.keys(r)){if(names.includes(norm(k)))return String(r[k]).trim()}return ''};
+  const imported=rows.map(r=>{
+    const it=normItem({type:pick(r,'tipo','type'),gender:pick(r,'genero','gender'),original:pick(r,'original','source','termo'),translation:pick(r,'traducao','translation'),notes:pick(r,'notas','notes','nota')});
+    it.occ=pick(r,'ocorrencias','occurrences').split(/\s*,\s*/).filter(Boolean);
+    const ed=pick(r,'editado','edited').toLowerCase();it.edited=['sim','s','yes','y','true','1','x'].includes(ed);
+    delete it.update;return it}).filter(it=>it.original);
+  if(!imported.length)return toast('Nenhum termo encontrado. A planilha precisa ao menos das colunas Tipo, Original e Tradução.');
+  resetState();
+  let title='';
+  if(wb.Sheets['Info']){const a=XLSX.utils.sheet_to_json(wb.Sheets['Info'],{header:1});const row=a.find(r=>norm(String(r[0]||''))==='projeto');title=row?String(row[1]||''):''}
+  if(!title)title=(wb.Props&&wb.Props.Title)||f.name.replace(/\.xlsx$/i,'').replace(/_\d{4}-\d{2}-\d{2}$/,'').replace(/\s*\[KNP\]\s*$/i,'').replace(/\s*\(\d+\)$/,'');
+  let ctx='';if(wb.Sheets['Info']){const a=XLSX.utils.sheet_to_json(wb.Sheets['Info'],{header:1});const row=a.find(r=>norm(String(r[0]||''))==='contexto');ctx=row?String(row[1]||''):''}
+  $('projectContext').value=ctx;$('projectTitle').value=title;document.title=(title?title+' · ':'')+'LexiSub';
+  glossary=dedupe(imported).map(x=>{delete x.update;return x});pending=[];
+  blocked=[];const bn=wb.SheetNames.find(n=>/^exclu/i.test(norm(n)));
+  if(bn)XLSX.utils.sheet_to_json(wb.Sheets[bn],{defval:''}).forEach(r=>{const it=normItem({type:pick(r,'tipo','type'),gender:pick(r,'genero','gender'),original:pick(r,'original'),translation:pick(r,'traducao','translation'),notes:pick(r,'notas','notes')});if(it.original&&!isBlocked(it.original))blocked.push({original:it.original,type:it.type,gender:it.gender,translation:it.translation,notes:it.notes,when:pick(r,'excluido em')})});
+  renderBlocked();pinnedId=null;save();markExported();render();renderReview();
+  toast(`${glossary.length} termos importados`);
+});
+
+/* ---------- copiar em texto ---------- */
+function copyAsText(){
+  const list=glossary.filter(g=>g.original);
+  if(!list.length)return toast('O glossário está vazio.');
+  const line=g=>`${g.original} → ${g.translation||g.original}`;
+  const byName=(a,b)=>coll.compare(a.original,b.original);
+  const terms=list.filter(g=>g.type!=='CHARACTER').sort(defaultCmp);
+  const chars=list.filter(g=>g.type==='CHARACTER');
+  const fem=chars.filter(g=>g.gender==='F').sort(byName);
+  const male=chars.filter(g=>g.gender==='M').sort(byName);
+  const unk=chars.filter(g=>g.gender!=='F'&&g.gender!=='M').sort(byName);
+  const blocks=[];
+  const ctx=$('projectContext').value.trim();
+  if(ctx){const t=$('projectTitle').value.trim();blocks.push(`Context${t?' of '+t:''}:\n${ctx}`)}
+  if(terms.length)blocks.push('Translate the following terms consistently:\n'+terms.map(line).join('\n'));
+  if(fem.length)blocks.push('Consider the following names as female:\n'+fem.map(line).join('\n'));
+  if(male.length)blocks.push('Consider the following names as male:\n'+male.map(line).join('\n'));
+  if(unk.length)blocks.push('Consider the following names (gender unknown):\n'+unk.map(line).join('\n'));
+  navigator.clipboard.writeText(blocks.join('\n\n'));toast('Glossário copiado em texto');
+}
+
+load();render();renderReview();renderFiles();renderBlocked();
+</script>
+</body>
+</html>
