@@ -502,13 +502,13 @@ function buildPrompt(chunk,i,n){
 
 REGRAS
 1. Tipos permitidos: CHARACTER, LOCATION, ORGANIZATION, TITLES, PHRASE.
-   - CHARACTER: TODOS os nomes de personagens citados, mesmo com gênero desconhecido. Nome e apelido em entradas SEPARADAS; no apelido, escreva em notes "apelido de <nome>" e use o mesmo gênero. Se um nome aparece com honorífico (Mr., Mrs., Ms., Miss, Dr., Prof., Detective, Captain etc.), crie uma entrada com o honorífico e traduza-o respeitando o gênero (ex.: "Dr. Hale" → "Dra. Hale" se for mulher).
-   - LOCATION: lugares citados.
-   - ORGANIZATION: empresas, instituições, órgãos, equipes, grupos.
-   - TITLES: títulos de obras citadas (livros, filmes, séries, animes, mangás, histórias em quadrinhos, músicas, programas, jogos, quadros/pinturas, peças de teatro).
-   - PHRASE: termos, gírias, jargões, bordões e expressões recorrentes ou ambíguos que ajudem a manter a consistência.
+   - CHARACTER: TODOS os nomes de personagens citados, mesmo com gênero desconhecido: personagens fictícios, pessoas reais, figuras históricas, celebridades e outros indivíduos mencionados ou relevantes para a produção. Nome e apelido em entradas SEPARADAS; no apelido, escreva em notes "apelido de <nome>" e use o mesmo gênero. Se um nome aparece com honorífico (Mr., Mrs., Ms., Miss, Dr., Prof., Detective, Captain etc.), crie uma entrada com o honorífico e traduza-o respeitando o gênero (ex.: "Dr. Hale" → "Dra. Hale" se for mulher).
+   - LOCATION: lugares citados: localizações geográficas, países, cidades, regiões, bairros, ruas, edifícios, estabelecimentos e lugares fictícios.
+   - ORGANIZATION: empresas, instituições, órgãos governamentais, agências, associações, ONGs, grupos, equipes, facções e organizações fictícias.
+   - TITLES: títulos de obras culturais, artísticas e de entretenimento citadas (livros, filmes, séries, animes, mangás, histórias em quadrinhos, músicas, álbuns, programas de TV, jogos, quadros/pinturas, esculturas, peças de teatro, documentários, podcasts).
+   - PHRASE: termos, gírias, jargões, bordões, expressões idiomáticas, provérbios, ditados populares, slogans, expressões culturais, frases recorrentes ou ambíguas e construções linguísticas que exijam uma tradução padronizada.
 2. Inclua SOMENTE termos que aparecem literalmente no texto.
-3. "original": exatamente como no inglês, mas no SINGULAR quando for substantivo (mesmo que a legenda use o plural). Use inicial maiúscula apenas se for nome próprio ou se a grafia exigir; caso contrário, comece com minúscula.
+3. "original": exatamente como aparece no inglês. Para substantivos comuns (PHRASE), prefira a forma no singular quando a legenda usar o plural (ex.: "warlocks" → "warlock"). NUNCA altere nomes próprios, nomes de grupos, organizações, títulos ou termos que só existem no plural (ex.: "Defenders", "Avengers", "Los Angeles Lakers", "pants"): mantenha-os exatamente como na legenda. Na dúvida, mantenha a forma original. Use inicial maiúscula apenas se for nome próprio ou se a grafia exigir; caso contrário, comece com minúscula.
 4. "translation": sugestão em ${lang} coerente com o contexto de todo o material; mesma regra de maiúsculas. Se o termo deve ficar igual ao inglês, repita o termo em inglês. NUNCA deixe em branco.
 5. "gender": para CHARACTER use "M", "F" ou "?" (se o diálogo não permitir saber; procure pronomes, adjetivos, títulos e formas de tratamento). Para os demais tipos use "M" ou "F" apenas quando for relevante para a concordância em português (ex.: "a Interpol"), senão "".
 6. Não repita o mesmo "original" em mais de um tipo.
