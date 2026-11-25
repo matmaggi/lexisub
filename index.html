@@ -834,6 +834,16 @@ document.addEventListener('focusout',e=>{
   if(!(next&&t.tr.contains(next))&&!t.obj.translation&&t.obj.original){t.obj.translation=t.obj.original;save()}
   maybeRerender(t,next);
 });
+// colar sempre como texto puro nas células editáveis
+document.addEventListener('paste',e=>{
+  const el=e.target.closest&&e.target.closest('[contenteditable]');if(!el)return;
+  e.preventDefault();
+  const t=(e.clipboardData||window.clipboardData).getData('text/plain').replace(/\s+/g,' ').trim();
+  if(!document.execCommand('insertText',false,t)){
+    const sel=getSelection();if(!sel.rangeCount)return;const r=sel.getRangeAt(0);r.deleteContents();r.insertNode(document.createTextNode(t));r.collapse(false);
+  }
+});
+document.addEventListener('drop',e=>{if(e.target.closest&&e.target.closest('[contenteditable]'))e.preventDefault()});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.isContentEditable){e.preventDefault();e.target.blur()}});
 function addRow(){
   if(pinnedId){const p=glossary.find(g=>g.id===pinnedId);if(p&&!p.original){glossary=glossary.filter(g=>g.id!==pinnedId)}}
