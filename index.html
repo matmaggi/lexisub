@@ -714,7 +714,7 @@ function renderReview(){
   if(!pending.length){hide('review');return}
   show('review');
   $('reviewCount').textContent=`${pending.filter(p=>p.kind==='new').length} novos · ${pending.filter(p=>p.kind==='update').length} atualizações`;
-  const ordered=[...pending].sort((a,b)=>(TYPES.indexOf(a.item.type)-TYPES.indexOf(b.item.type))||coll.compare(a.item.original,b.item.original));
+  const ordered=[...pending].sort((a,b)=>defaultCmp(a.item,b.item));
   let prevT=null;
   $('reviewBody').innerHTML=ordered.map(p=>{
     const it=p.item,isU=p.kind==='update';const g=it.gender==='?'?'Q':it.gender;
