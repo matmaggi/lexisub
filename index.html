@@ -86,7 +86,7 @@ button:disabled{opacity:.5;cursor:default}
 #status{font-size:12px;color:var(--mut);margin-top:6px;white-space:pre-wrap}
 .cost{font-size:12px;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;margin-top:10px}
 .chips{display:flex;gap:4px;flex-wrap:nowrap}
-.iarow{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:8px}
+.iarow{display:grid;grid-template-columns:1.25fr 1fr 1fr 1fr;gap:8px}
 .iarow>div{min-width:0}.iarow select,.iarow input{width:100%}
 .keyrow{display:flex;gap:8px;align-items:flex-end;flex-wrap:nowrap}
 .keyrow>div:first-child{flex:1;min-width:0}
@@ -137,14 +137,28 @@ td.occ,th:nth-last-child(2){border-right:none}
 .logo-bg{fill:var(--ac)}.logo-fg{fill:var(--onac)}
 .logo-st{fill:none;stroke:var(--onac);stroke-linecap:round;stroke-linejoin:round}
 footer.ft{text-align:center;color:var(--mut);font-size:.9rem;line-height:1.5;padding-top:28px;padding-bottom:32px}
-footer.ft p{margin:0}
+footer.ft p{margin:0}footer.ft p+p{margin-top:6px}
 footer.ft a{color:var(--ac);font-weight:600;text-decoration:underline;text-underline-offset:3px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== balão de ajuda (README) ===== */
+.fh .brand{position:relative}
+.ajuda{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ac);color:var(--onac);font:700 15px/1 var(--sys);cursor:help;flex:none;align-self:center;user-select:none}
+.ajuda-box{position:absolute;top:100%;left:50%;transform:translateX(-50%);z-index:100;width:800px;max-width:calc(100vw - 32px);max-height:75vh;overflow:auto;margin-top:8px;padding:18px 24px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-top:4px solid var(--ac);border-radius:12px;box-shadow:0 14px 36px rgba(0,0,0,.25);font:400 14px/1.55 var(--sys);text-align:justify;hyphens:none;-webkit-hyphens:none;word-break:normal;overflow-wrap:normal;cursor:auto;visibility:hidden;opacity:0;transition:opacity .12s ease .3s,visibility 0s linear .42s!important}
+.ajuda:hover .ajuda-box,.ajuda:focus .ajuda-box,.ajuda:focus-within .ajuda-box,.ajuda-box:hover{visibility:visible;opacity:1;transition:opacity .12s ease 0s,visibility 0s linear 0s!important}
+.ajuda-box h2{font:800 1.3rem/1.2 var(--disp);margin:0 0 6px;text-align:left}
+.ajuda-box h3{font:700 1.05rem/1.25 var(--disp);margin:16px 0 4px;text-align:left}
+.ajuda-box h4{font:700 .95rem/1.3 var(--sys);margin:12px 0 2px;text-align:left}
+.ajuda-box p{margin:6px 0}
+.ajuda-box ul{margin:4px 0;padding-left:22px}
+.ajuda-box li{margin:3px 0}
+/* ===== PIX ===== */
+.pix{user-select:all;-webkit-user-select:all;cursor:pointer;color:var(--tx);overflow-wrap:anywhere}
 </style>
 </head>
 <body>
 <header class="fh">
-  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="logo-bg" width="64" height="64" rx="16"/><rect class="logo-fg" x="11" y="16" width="13" height="5" rx="2.5"/><path class="logo-st" d="M28 18.5H36M33 16l3 2.5l-3 2.5" stroke-width="2.6"/><rect class="logo-fg" x="41" y="16" width="12" height="5" rx="2.5"/><rect class="logo-fg" x="11" y="30" width="10" height="5" rx="2.5"/><path class="logo-st" d="M28 32.5H36M33 30l3 2.5l-3 2.5" stroke-width="2.6"/><rect class="logo-fg" x="41" y="30" width="12" height="5" rx="2.5" opacity=".6"/><rect class="logo-fg" x="11" y="44" width="13" height="5" rx="2.5"/><path class="logo-st" d="M28 46.5H36M33 44l3 2.5l-3 2.5" stroke-width="2.6"/><rect class="logo-fg" x="41" y="44" width="9" height="5" rx="2.5"/></svg><h1>LexiSub</h1></div>
+  <div class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="logo-bg" width="64" height="64" rx="16"/><rect class="logo-fg" x="11" y="16" width="13" height="5" rx="2.5"/><path class="logo-st" d="M28 18.5H36M33 16l3 2.5l-3 2.5" stroke-width="2.6"/><rect class="logo-fg" x="41" y="16" width="12" height="5" rx="2.5"/><rect class="logo-fg" x="11" y="30" width="10" height="5" rx="2.5"/><path class="logo-st" d="M28 32.5H36M33 30l3 2.5l-3 2.5" stroke-width="2.6"/><rect class="logo-fg" x="41" y="30" width="12" height="5" rx="2.5" opacity=".6"/><rect class="logo-fg" x="11" y="44" width="13" height="5" rx="2.5"/><path class="logo-st" d="M28 46.5H36M33 44l3 2.5l-3 2.5" stroke-width="2.6"/><rect class="logo-fg" x="41" y="44" width="9" height="5" rx="2.5"/></svg><h1>LexiSub</h1><span class="ajuda" tabindex="0" role="button" aria-label="Sobre o LexiSub">?<div class="ajuda-box" role="tooltip"><h2>LexiSub</h2><p><b>Glossário inteligente para tradução e legendagem: a IA lê suas legendas e monta o glossário de nomes, lugares e expressões.</b></p><p>O LexiSub analisa as legendas de um projeto com IA e cria um glossário com personagens (e gênero), lugares, organizações, títulos e expressões, com sugestão de tradução e notas. A cada episódio novo, ele mostra só os termos novos para você aprovar.</p><h3>Formatos aceitos</h3><p>SRT, DFXP, PXTT, TTML e TTAL (vários arquivos de uma vez).</p><h3>Funcionalidades</h3><h4>Projetos</h4><ul><li>Título e <b>contexto do projeto</b> (sinopse, público, tom, observações do cliente), usados na análise.</li><li><b>Projetos recentes</b> salvos no navegador, com aviso de alterações ainda não exportadas.</li><li>Novo projeto, abrir projeto (.xlsx) e exportar projeto. Abrir de novo um projeto que já está na memória atualiza o mesmo projeto, sem criar uma cópia.</li></ul><h4>Análise com IA</h4><ul><li><b>Claude, ChatGPT/OpenAI, Gemini, Groq (plano gratuito), OpenRouter (modelos gratuitos)</b> ou <b>qualquer serviço compatível com a API da OpenAI</b>, inclusive Ollama e LM Studio rodando no seu computador. Também há o <b>modo manual</b> (copiar o prompt e colar a resposta de qualquer chat, sem chave de API).</li><li><b>Salvar chave (opcional):</b> a chave só fica guardada no navegador se você marcar essa opção.</li><li>Idiomas de origem e de destino configuráveis (padrão: inglês → português do Brasil).</li><li>Divide automaticamente o material em partes quando ele é grande. Cada parte recebe os termos já encontrados nas anteriores e o glossário existente, para manter as mesmas traduções.</li><li><b>Nova tentativa automática</b> quando o limite de uso do serviço é atingido ou há falha temporária.</li><li><b>Nada se perde se uma parte falhar:</b> o que já foi analisado é aproveitado, e o botão <i>Tentar de novo as partes que faltaram</i> repete só o que deu errado.</li><li><b>Custo estimado</b> antes e <b>custo real</b> depois da análise.</li><li>Usa os nomes de personagens que vêm nos metadados de arquivos TTAL como pista.</li><li>Descarta termos que não aparecem de fato nas legendas (considerando singular e plural).</li><li>Lê arquivos em UTF-8, UTF-16 e Windows-1252, e mantém falas que são só números ou que começam com palavras como “OK:”.</li></ul><h4>Tipos de termo</h4><ul><li><b>CHARACTER:</b> personagens e pessoas citadas, com gênero (M, F ou ?), apelidos e honoríficos (ex.: "Dr. Hale" → "Dra. Hale").</li><li><b>LOCATION:</b> países, cidades, bairros, ruas, edifícios, estabelecimentos e lugares fictícios.</li><li><b>ORGANIZATION:</b> empresas, instituições, agências, grupos, equipes e facções.</li><li><b>TITLES:</b> livros, filmes, séries, músicas, jogos, programas e outras obras citadas.</li><li><b>PHRASE:</b> gírias, jargões, bordões, expressões idiomáticas e frases recorrentes.</li></ul><h4>Episódios novos</h4><ul><li>Termos novos vão para uma <b>lista de revisão</b>: aceitar ou excluir um por um, ou todos de uma vez.</li><li><b>Sugestões de atualização:</b> quando um diálogo novo revela o gênero de um personagem que estava "?".</li><li>Termos editados à mão nunca são sobrescritos pela IA (marcados com um ponto laranja).</li><li><b>Termos excluídos</b> não voltam a ser sugeridos; o botão <i>Restaurar</i> devolve o termo ao glossário.</li></ul><h4>Glossário</h4><ul><li>Tabela editável, com cores por tipo e gênero.</li><li>Busca que ignora acentos (“Joao” encontra “João”), filtros por tipo e gênero, ordenação por coluna.</li><li><b>↩ Desfazer</b> a última alteração (edições, exclusões, aceites e análises).</li><li><b>Ocorrências:</b> em quais episódios cada termo aparece, com filtro por arquivo.</li><li>Incluir termos manualmente.</li></ul><h4>Exportação</h4><ul><li><b>Excel (.xlsx)</b> formatado, com abas de glossário, informações do projeto e termos excluídos.</li><li><b>Copiar em texto:</b> gera instruções prontas para colar em uma ferramenta de tradução ou IA (termos, nomes femininos, masculinos e de gênero desconhecido).</li></ul><h3>Privacidade</h3><p>Projetos e legendas ficam salvos apenas no seu navegador; a chave de API, só se você marcar <i>Salvar chave</i>. O texto das legendas só é enviado para a IA escolhida quando você clica em <i>Analisar legendas</i>.</p></div></span></div>
   <p class="sub">Glossário inteligente para tradução e legendagem.</p>
 </header>
 <main>
@@ -185,20 +199,26 @@ footer.ft a{color:var(--ac);font-weight:600;text-decoration:underline;text-under
             <option value="claude">Claude (API)</option>
             <option value="openai">OpenAI / ChatGPT (API)</option>
             <option value="gemini">Gemini (API)</option>
+            <option value="groq">Groq · plano gratuito (API)</option>
+            <option value="openrouter">OpenRouter · modelos gratuitos (API)</option>
+            <option value="custom">Outro compatível com OpenAI (Ollama, LM Studio, Mistral, DeepSeek…)</option>
             <option value="manual">Manual (copiar e colar no chat)</option>
           </select></div>
         <div class="apiOnly"><label>Modelo</label><input type="text" id="model" onchange="onModelChange()"></div>
+        <div><label>Idioma de origem</label><input type="text" id="sourceLang" value="inglês" onchange="saveSettings();updateEstimate()"></div>
         <div><label>Idioma de destino</label><input type="text" id="targetLang" value="português do Brasil" onchange="saveSettings()"></div>
       </div>
+      <div class="apiOnly hidden" id="baseRow" style="margin-top:8px"><label>Endereço do servidor (compatível com a API da OpenAI)</label><input type="text" id="baseUrl" style="width:100%" placeholder="http://localhost:11434/v1" onchange="saveSettings()"></div>
       <div class="keyrow apiOnly" style="margin-top:8px">
-        <div><label>Chave de API (fica salva só neste navegador)</label><input type="password" id="apiKey" style="width:100%" onchange="saveSettings()"></div>
-        <button onclick="forgetKey()">Esquecer chave</button>
+        <div><label>Chave de API</label><input type="password" id="apiKey" style="width:100%" onchange="saveSettings()"></div>
+        <label style="display:flex;gap:6px;align-items:center;white-space:nowrap;margin:0 0 7px;font-size:13px;color:var(--tx)" title="Guarda a chave só neste navegador. Desmarcado, a chave fica apenas na memória desta aba e some ao fechar a página."><input type="checkbox" id="saveKey" onchange="saveSettings()"> Salvar chave</label>
         <div title="Preços de referência (nov/2026). Confira no site do provedor."><label style="white-space:nowrap">US$/1M entrada · saída</label><input type="number" step="0.01" min="0" id="priceIn" style="width:56px" onchange="saveSettings();updateEstimate()"> <input type="number" step="0.01" min="0" id="priceOut" style="width:56px" onchange="saveSettings();updateEstimate()"></div>
       </div>
       <div class="cost apiOnly" id="costBox">Carregue legendas para ver o custo estimado.</div>
       <div style="margin-top:12px;text-align:center">
         <button class="primary" id="analyzeBtn" onclick="analyze()">Analisar legendas</button>
         <div class="help" id="modeHint"></div>
+        <button id="resumeBtn" class="hidden" style="margin-top:8px" onclick="resumeAnalysis()">Tentar de novo as partes que faltaram</button>
       </div>
       <div class="progress" id="prog"><div></div></div>
       <div id="status"></div>
@@ -225,12 +245,13 @@ footer.ft a{color:var(--ac);font-weight:600;text-decoration:underline;text-under
   <section class="card">
     <h2>3. Glossário</h2>
     <div class="filterbar">
-      <div class="searchbox" style="flex:1 1 170px;min-width:150px"><input type="text" id="search" placeholder="Buscar (original·tradução)" oninput="onSearch()" onkeydown="if(event.key==='Escape')clearSearch()"><button type="button" id="searchClear" class="hidden" title="Limpar busca" aria-label="Limpar busca" onclick="clearSearch()">✕</button></div>
+      <div class="searchbox" style="flex:1 1 260px;min-width:220px"><input type="text" id="search" placeholder="Buscar (original·tradução)" oninput="onSearch()" onkeydown="if(event.key==='Escape')clearSearch()"><button type="button" id="searchClear" class="hidden" title="Limpar busca" aria-label="Limpar busca" onclick="clearSearch()">✕</button></div>
       <span class="dot">•</span>
       <div class="chips" id="typeChips"></div>
       <span class="dot">•</span>
       <div class="chips" id="genderChips"></div>
       <span class="dot">•</span>
+      <button id="undoBtn" style="white-space:nowrap;padding:6px 10px" onclick="undo()" disabled title="Desfazer a última alteração" aria-label="Desfazer">↩</button>
       <button class="primary" style="white-space:nowrap" onclick="addRow()">+ Incluir termo</button>
     </div>
     <div class="count" id="count"></div>
@@ -244,9 +265,9 @@ footer.ft a{color:var(--ac);font-weight:600;text-decoration:underline;text-under
       </table>
     </div>
     <details id="blockedBox" style="margin-top:12px">
-      <summary class="help" style="cursor:pointer">Termos excluídos (<span id="blockedCount">0</span>): não entram no glossário e são ignorados automaticamente nas próximas análises</summary>
+      <summary class="help" style="cursor:pointer">Termos excluídos (<span id="blockedCount">0</span>): não entram no glossário e são ignorados automaticamente nas próximas análises. “Restaurar” devolve o termo ao glossário.</summary>
       <div class="tablewrap" style="margin-top:8px;max-height:260px">
-        <table class="fixed"><colgroup><col style="width:112px"><col><col><col style="width:88px"><col style="width:150px"></colgroup>
+        <table class="fixed"><colgroup><col style="width:112px"><col><col><col style="width:88px"><col style="width:96px"></colgroup>
         <thead><tr><th class="nosort">Tipo</th><th class="nosort">Original</th><th class="nosort">Tradução</th><th class="nosort">Excluído em</th><th class="nosort"></th></tr></thead>
         <tbody id="blockedBody"></tbody></table>
       </div>
@@ -254,7 +275,7 @@ footer.ft a{color:var(--ac);font-weight:600;text-decoration:underline;text-under
     <p class="help" style="text-align:center">Clique numa célula para editar. O ponto laranja indica termo editado manualmente (a IA nunca sobrescreve). Termo novo fica no topo, com contorno azul, até você sair da linha.</p>
   </section>
 </main>
-<footer class="ft"><p>Veja mais ferramentas úteis para legendagem clicando <a href="https://matmaggi.github.io/subtools/">aqui</a>.</p></footer>
+<footer class="ft"><p>Veja mais ferramentas úteis para legendagem clicando <a href="https://matmaggi.github.io/subtools/">aqui</a>.</p><p>Achou a ferramenta útil? Faz um PIX! <b class="pix" title="Clique para selecionar a chave PIX">5a08fa27-b8f4-4935-9857-6b03fb63248a</b></p></footer>
 <input type="file" id="xlsxInput" accept=".xlsx" class="hidden">
 <div class="toast" id="toast"></div>
 
@@ -263,10 +284,18 @@ const TYPES=['CHARACTER','LOCATION','ORGANIZATION','TITLES','PHRASE'];
 const GENDER_ORDER={M:0,F:1,'?':2,'':3};
 const TYPE_COLORS={CHARACTER:'E3F3E7',LOCATION:'EFE7FB',ORGANIZATION:'FDEBD6',TITLES:'DFF2F3',PHRASE:'FBF6D2'};
 const GENDER_COLORS={M:'CFE0FF',F:'FAD1E1','?':'E3E3E3'};
-const DEFAULT_MODELS={claude:'claude-sonnet-5-5',openai:'gpt-6-luna',gemini:'gemini-2.5-pro'};
+const DEFAULT_MODELS={claude:'claude-sonnet-5-5',openai:'gpt-6-luna',gemini:'gemini-2.5-pro',groq:'llama-3.3-70b-versatile',openrouter:'',custom:''};
+const BASES={openai:'https://api.openai.com/v1',groq:'https://api.groq.com/openai/v1',openrouter:'https://openrouter.ai/api/v1',custom:'http://localhost:11434/v1'};
+const NOTES={claude:'Chave em console.anthropic.com. Cobrança por uso.',openai:'Chave em platform.openai.com/api-keys. Cobrança por uso, à parte da assinatura do ChatGPT.',
+  gemini:'Chave em aistudio.google.com/apikey. No plano gratuito, o Google pode usar os textos enviados para melhorar os produtos dele.',
+  groq:'Chave grátis em console.groq.com. O limite por minuto é baixo: as partes ficam menores e a página espera sozinha quando o limite é atingido.',
+  openrouter:'Chave em openrouter.ai/keys. Informe o modelo; os que terminam em “:free” não têm custo, mas têm limite diário baixo.',
+  custom:'Ollama ou LM Studio rodam no seu computador e os textos não saem dele. No Ollama, inicie com OLLAMA_ORIGINS=* para o navegador conseguir conectar.',
+  manual:'O prompt será dividido em partes se for grande.'};
 // preços de referência US$/1M tokens [entrada, saída] – nov/2026
 const KNOWN_PRICES={'claude-sonnet-5-5':[2,10],'gpt-6-luna':[0.1,0.5],'gemini-2.5-pro':[1.25,10]};
 const CHUNK_CHARS=45000;
+const chunkChars=()=>({groq:12000,openrouter:20000,custom:20000})[$('provider').value]||CHUNK_CHARS;
 const EST_OUT_TOKENS_PER_CHUNK=6000;
 const LS='glossLeg_';
 
@@ -278,13 +307,14 @@ let typeFilter=new Set(TYPES), genderFilter=new Set(['M','F','?','']);
 let manualChunks=[];
 let pinnedId=null;
 let blocked=[];       // termos excluídos: {original,type,gender,translation,notes,when}
-let settings={models:{},prices:{}};
+let settings={models:{},prices:{},bases:{}};
 
 const $=id=>document.getElementById(id);
 const uid=()=>Math.random().toString(36).slice(2,10);
 const hide=id=>$(id).classList.add('hidden');
 const show=id=>$(id).classList.remove('hidden');
 function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+const fold=s=>String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 const usd=v=>'US$ '+(v<0.01?v.toFixed(4):v.toFixed(2));
 
@@ -310,7 +340,7 @@ function markExported(){const ix=readIndex(),m=ix.find(x=>x.id===currentId);if(m
 function saveTitle(){document.title=($('projectTitle').value?$('projectTitle').value+' · ':'')+'LexiSub';save()}
 function saveContext(){save()}
 function resetState(){
-  currentId=null;glossary=[];pending=[];blocked=[];pinnedId=null;occFilter=null;
+  currentId=null;glossary=[];pending=[];blocked=[];pinnedId=null;occFilter=null;hist=[];updUndo();
   $('projectTitle').value='';$('projectContext').value='';document.title='LexiSub';$('status').textContent='';
 }
 function openProject(id){
@@ -365,17 +395,22 @@ function load(){
   migrateOld();
   try{const s=JSON.parse(localStorage.getItem(LS+'settings')||'{}');
     settings.models=s.models||{};if(settings.models.openai==='gpt-5')settings.models.openai='gpt-6-luna';settings.prices=s.prices||{};
-    if(s.provider)$('provider').value=s.provider; if(s.targetLang)$('targetLang').value=s.targetLang;}catch(e){}
+    if(s.provider&&[...$('provider').options].some(o=>o.value===s.provider))$('provider').value=s.provider; if(s.targetLang)$('targetLang').value=s.targetLang;if(s.sourceLang)$('sourceLang').value=s.sourceLang;
+    settings.bases=s.bases||{};}catch(e){}
   onProviderChange(true);
 }
+const memKeys={};   // chaves digitadas nesta aba (só na memória)
 function saveSettings(){
   const p=$('provider').value;
   if(p!=='manual'){
     const m=$('model').value.trim();settings.models[p]=m;
     settings.prices[m]=[parseFloat($('priceIn').value)||0,parseFloat($('priceOut').value)||0];
-    try{localStorage.setItem(LS+'key_'+p,$('apiKey').value.trim())}catch(e){}
+    if(p==='custom')settings.bases.custom=$('baseUrl').value.trim();
+    const k=$('apiKey').value.trim();memKeys[p]=k;
+    // a chave só fica guardada no navegador se "Salvar chave" estiver marcado
+    try{if($('saveKey').checked&&k)localStorage.setItem(LS+'key_'+p,k);else localStorage.removeItem(LS+'key_'+p)}catch(e){}
   }
-  try{localStorage.setItem(LS+'settings',JSON.stringify({provider:p,targetLang:$('targetLang').value,models:settings.models,prices:settings.prices}))}catch(e){}
+  try{localStorage.setItem(LS+'settings',JSON.stringify({provider:p,targetLang:$('targetLang').value,sourceLang:$('sourceLang').value,models:settings.models,prices:settings.prices,bases:settings.bases}))}catch(e){}
 }
 function fillPrices(){
   const m=$('model').value.trim();const pr=settings.prices[m]||KNOWN_PRICES[m];
@@ -385,13 +420,15 @@ function onModelChange(){fillPrices();saveSettings();updateEstimate()}
 function onProviderChange(initial){
   const p=$('provider').value, manual=p==='manual';
   document.querySelectorAll('.apiOnly').forEach(e=>e.classList.toggle('hidden',manual));
-  if(!manual){$('model').value=settings.models[p]||DEFAULT_MODELS[p];let k='';try{k=localStorage.getItem(LS+'key_'+p)||''}catch(e){}$('apiKey').value=k;fillPrices()}
+  if(!manual){$('model').value=settings.models[p]||DEFAULT_MODELS[p];let k='';try{k=localStorage.getItem(LS+'key_'+p)||''}catch(e){}
+    $('saveKey').checked=!!k;$('apiKey').value=k||memKeys[p]||'';fillPrices();
+    $('baseUrl').value=p==='custom'?(settings.bases.custom||BASES.custom):'';}
+  $('baseRow').classList.toggle('hidden',p!=='custom');
   $('analyzeBtn').textContent=manual?'Gerar prompt':'Analisar legendas';
-  $('modeHint').textContent=manual?'O prompt será dividido em partes se for grande.':'';
+  $('modeHint').textContent=NOTES[p]||'';
   if(!initial)saveSettings();
   updateEstimate();
 }
-function forgetKey(){const p=$('provider').value;try{localStorage.removeItem(LS+'key_'+p)}catch(e){}$('apiKey').value='';toast('Chave removida deste navegador')}
 function newProject(){
   if(isDirty()&&!confirm('Este projeto tem alterações que ainda não foram exportadas para o seu computador. Ele continua em "Projetos Recentes", mas recomendamos exportar. Começar um projeto novo mesmo assim?'))return;
   resetState();files=[];renderFiles();render();renderReview();renderBlocked();
@@ -412,10 +449,16 @@ function updateEstimate(){
 }
 
 /* ---------- legendas ---------- */
+async function readText(f){
+  const b=new Uint8Array(await f.arrayBuffer());
+  if(b[0]===0xFF&&b[1]===0xFE)return new TextDecoder('utf-16le').decode(b.subarray(2));
+  if(b[0]===0xFE&&b[1]===0xFF)return new TextDecoder('utf-16be').decode(b.subarray(2));
+  try{return new TextDecoder('utf-8',{fatal:true}).decode(b).replace(/^\uFEFF/,'')}catch(e){return new TextDecoder('windows-1252').decode(b)}
+}
 async function loadSubs(list){
   for(const f of list){
     if(!/\.(srt|dfxp|pxtt|ttml|ttal|xml)$/i.test(f.name)){toast('Formato não suportado: '+f.name);continue}
-    const raw=await f.text();
+    const raw=await readText(f);
     let text;
     try{text=/\.srt$/i.test(f.name)?parseSRT(raw):/\.ttal$/i.test(f.name)?parseTTAL(raw):parseTTML(raw)}catch(err){toast('Não consegui ler '+f.name);continue}
     files.push({label:episodeLabel(f.name),name:f.name,text,chars:window._ttalChars||[]});window._ttalChars=null;
@@ -430,19 +473,23 @@ $('subFiles').addEventListener('change',async e=>{await loadSubs(e.target.files)
   window.addEventListener('dragover',e=>e.preventDefault());window.addEventListener('drop',e=>e.preventDefault());})();
 function episodeLabel(n){const m=n.match(/S(\d{1,2})\s*E(\d{1,3})/i)||n.match(/(\d{1,2})x(\d{1,3})/i);
   if(m)return 'S'+m[1].padStart(2,'0')+'E'+m[2].padStart(2,'0');const e=n.match(/E(?:p(?:isode)?)?[\s._-]?(\d{1,3})/i);return e?'E'+e[1].padStart(2,'0'):n.replace(/\.[^.]+$/,'')}
+// palavras que podem vir antes de dois-pontos sem ser nome de quem fala
+const SPK_NOT=new Set(['OK','OKAY','NO','YES','HEY','OH','WAIT','NOTE','PS','P.S','TIP','WARNING','STOP','LOOK','LISTEN','SIM','NÃO','EI','OLHA','ATENÇÃO','AVISO','NOTA','BREAKING','UPDATE','SPOILER','ALERT','RULE','STEP','PART','CHAPTER']);
 function cleanLine(s){
   return s.replace(/\{[^}]*\}/g,'')
     .replace(/<[^>]+>/g,'')
     .replace(/&nbsp;/g,' ').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#39;/g,"'")
     .replace(/^\s*[-–—]\s*/,'')
-    .replace(/^\s*[A-Z][A-Z0-9 .'-]{1,30}:\s+/,'')
+    .replace(/^\s*([A-Z][A-Z0-9 .'-]{1,30}):\s+(?=\S)/,(m,n)=>SPK_NOT.has(n.trim().replace(/\.$/,''))?m:'')
     .replace(/\[[^\]]*\]|\([A-Z][A-Z\s]+\)/g,'')
     .replace(/[♪♫]/g,'').replace(/\s+/g,' ').trim();
 }
 function parseSRT(raw){
   const out=[];
   for(const block of raw.replace(/\r/g,'').split(/\n\s*\n/)){
-    const lines=block.split('\n').filter(l=>l.trim()&&!/^\d+$/.test(l.trim())&&!/-->/.test(l));
+    // só descarta a numeração (o número logo antes do tempo); números ditos na fala continuam
+    const all=block.split('\n'),ti=all.findIndex(l=>/-->/.test(l));
+    const lines=(ti>=0?all.slice(ti+1):all).filter(l=>l.trim()&&!/-->/.test(l));
     const t=lines.map(l=>l.split(/(?=\s-\s)/).map(cleanLine).join(' ')).join(' ').replace(/\s+/g,' ').trim();
     if(t)out.push(t);
   }
@@ -479,13 +526,16 @@ function buildChunks(){
   const chunks=[];let cur='';
   for(const f of files){
     const lines=('### '+f.label+'\n'+f.text).split('\n');
-    for(const l of lines){if(cur.length+l.length>CHUNK_CHARS&&cur){chunks.push(cur);cur='### '+f.label+' (continuação)\n'}cur+=l+'\n'}
+    for(const l of lines){if(cur.length+l.length>chunkChars()&&cur){chunks.push(cur);cur='### '+f.label+' (continuação)\n'}cur+=l+'\n'}
   }
   if(cur.trim())chunks.push(cur);
   return chunks;
 }
 function existingSummary(){
   if(!glossary.length)return '';
+  return existingList();
+}
+function existingList(){
   return '\n\nGLOSSÁRIO EXISTENTE (não repita estes termos; só inclua um deles de novo, com "update": true, se o diálogo revelar o gênero de um CHARACTER que está "?"):\n'+
     glossary.map(g=>`${g.type} | ${g.gender||'-'} | ${g.original} → ${g.translation}`).join('\n');
 }
@@ -496,9 +546,15 @@ function charHint(){
   const n=[...new Set(files.flatMap(f=>f.chars||[]))];
   return n.length?`PERSONAGENS LISTADOS NOS METADADOS DO ARQUIVO (use como pista de nomes e gênero; inclua só os que aparecem nos diálogos):\n${n.join(', ')}\n\n`:'';
 }
-function buildPrompt(chunk,i,n){
-  const lang=$('targetLang').value||'português do Brasil';
-  return `Você é especialista em localização de legendas do inglês para ${lang}. Analise os diálogos abaixo (já limpos de formatação) e monte um glossário para garantir consistência na tradução.${n>1?`\nEsta é a PARTE ${i+1} de ${n} do material; analise só esta parte.`:''}
+// termos já encontrados nas partes anteriores desta mesma análise
+function foundHint(found){
+  if(!found||!found.length)return '';
+  return '\n\nTERMOS JÁ IDENTIFICADOS NAS PARTES ANTERIORES DESTA ANÁLISE (use exatamente a mesma tradução e o mesmo gênero se aparecerem de novo; não os repita, a não ser para corrigir o gênero de um CHARACTER que está "?"):\n'+
+    found.map(g=>`${g.type} | ${g.gender||'-'} | ${g.original} → ${g.translation}`).join('\n');
+}
+function buildPrompt(chunk,i,n,found){
+  const lang=$('targetLang').value||'português do Brasil',src=$('sourceLang').value.trim()||'inglês';
+  return `Você é especialista em localização de legendas do ${src} para ${lang}. Analise os diálogos abaixo (já limpos de formatação) e monte um glossário para garantir consistência na tradução.${n>1?`\nEsta é a PARTE ${i+1} de ${n} do material; analise só esta parte.`:''}
 
 REGRAS
 1. Tipos permitidos: CHARACTER, LOCATION, ORGANIZATION, TITLES, PHRASE.
@@ -508,8 +564,8 @@ REGRAS
    - TITLES: títulos de obras culturais, artísticas e de entretenimento citadas (livros, filmes, séries, animes, mangás, histórias em quadrinhos, músicas, álbuns, programas de TV, jogos, quadros/pinturas, esculturas, peças de teatro, documentários, podcasts).
    - PHRASE: termos, gírias, jargões, bordões, expressões idiomáticas, provérbios, ditados populares, slogans, expressões culturais, frases recorrentes ou ambíguas e construções linguísticas que exijam uma tradução padronizada.
 2. Inclua SOMENTE termos que aparecem literalmente no texto.
-3. "original": exatamente como aparece no inglês. Para substantivos comuns (PHRASE), prefira a forma no singular quando a legenda usar o plural (ex.: "warlocks" → "warlock"). NUNCA altere nomes próprios, nomes de grupos, organizações, títulos ou termos que só existem no plural (ex.: "Defenders", "Avengers", "Los Angeles Lakers", "pants"): mantenha-os exatamente como na legenda. Na dúvida, mantenha a forma original. Use inicial maiúscula apenas se for nome próprio ou se a grafia exigir; caso contrário, comece com minúscula.
-4. "translation": sugestão em ${lang} coerente com o contexto de todo o material; mesma regra de maiúsculas. Se o termo deve ficar igual ao inglês, repita o termo em inglês. NUNCA deixe em branco.
+3. "original": exatamente como aparece no texto em ${src}. Para substantivos comuns (PHRASE), prefira a forma no singular quando a legenda usar o plural (ex. em inglês: "warlocks" → "warlock"). NUNCA altere nomes próprios, nomes de grupos, organizações, títulos ou termos que só existem no plural (ex.: "Defenders", "Avengers", "Los Angeles Lakers", "pants"): mantenha-os exatamente como na legenda. Na dúvida, mantenha a forma original. Use inicial maiúscula apenas se for nome próprio ou se a grafia exigir; caso contrário, comece com minúscula.
+4. "translation": sugestão em ${lang} coerente com o contexto de todo o material; mesma regra de maiúsculas. Se o termo deve ficar igual ao original, repita o termo original. NUNCA deixe em branco.
 5. "gender": para CHARACTER use "M", "F" ou "?" (se o diálogo não permitir saber; procure pronomes, adjetivos, títulos e formas de tratamento). Para os demais tipos use "M" ou "F" apenas quando for relevante para a concordância em português (ex.: "a Interpol"), senão "".
 6. Não repita o mesmo "original" em mais de um tipo.
 7. "notes": em português, explique o contexto, a justificativa da tradução, alternativas ou alertas (ex.: "trocadilho com…", "chamado de X pelo irmão"). Pode ficar vazio se não houver nada útil.${$('projectContext').value.trim()?'\n\nCONTEXTO DO PROJETO (informado pelo tradutor):\n'+$('projectContext').value.trim():''}
@@ -518,39 +574,65 @@ FORMATO DA RESPOSTA
 Responda APENAS com um array JSON válido, sem texto antes ou depois, neste formato:
 [{"type":"CHARACTER","gender":"F","original":"Dr. Hale","translation":"Dra. Hale","notes":"médica da protagonista"}]
 
+${existingSummary()}${blockedHint()}${foundHint(found)}
+
 ${charHint()}DIÁLOGOS
 ${chunk}`;
 }
 
 /* ---------- chamadas de API ---------- */
+const httpErr=(r,j)=>Object.assign(new Error((j&&j.error&&(j.error.message||j.error))||('HTTP '+r.status)),{status:r.status,retryAfter:r.headers.get('retry-after')});
+async function readJ(r){try{return await r.json()}catch(e){return null}}
 async function callAI(prompt){
   const p=$('provider').value,key=$('apiKey').value.trim(),model=$('model').value.trim()||DEFAULT_MODELS[p];
-  if(!key)throw new Error('Informe a chave de API.');
+  if(!key&&p!=='custom')throw Object.assign(new Error('Informe a chave de API.'),{fatal:true});
+  if(!model)throw Object.assign(new Error('Informe o modelo.'),{fatal:true});
   let r,j;
   if(p==='claude'){
     r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({model,max_tokens:16000,messages:[{role:'user',content:prompt}]})});
-    j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+    j=await readJ(r);if(!r.ok)throw httpErr(r,j);
     return {text:j.content.filter(c=>c.type==='text').map(c=>c.text).join(''),inTok:j.usage?.input_tokens||0,outTok:j.usage?.output_tokens||0};
   }
-  if(p==='openai'){
-    r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',headers:{'content-type':'application/json','authorization':'Bearer '+key},
-      body:JSON.stringify({model,messages:[{role:'user',content:prompt}]})});
-    j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+  if(BASES[p]){
+    const base=(p==='custom'?($('baseUrl').value.trim()||BASES.custom):BASES[p]).replace(/\/+$/,'');
+    const h={'content-type':'application/json'};if(key)h.authorization='Bearer '+key;
+    r=await fetch(base+'/chat/completions',{method:'POST',headers:h,body:JSON.stringify({model,messages:[{role:'user',content:prompt}]})});
+    j=await readJ(r);if(!r.ok)throw httpErr(r,j);
     return {text:j.choices[0].message.content,inTok:j.usage?.prompt_tokens||0,outTok:j.usage?.completion_tokens||0};
   }
   if(p==='gemini'){
-    r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`,{method:'POST',headers:{'content-type':'application/json'},
+    r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`,{method:'POST',headers:{'content-type':'application/json','x-goog-api-key':key},
       body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseMimeType:'application/json'}})});
-    j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);
+    j=await readJ(r);if(!r.ok)throw httpErr(r,j);
     const u=j.usageMetadata||{};
     return {text:j.candidates[0].content.parts.map(x=>x.text).join(''),inTok:u.promptTokenCount||0,outTok:(u.candidatesTokenCount||0)+(u.thoughtsTokenCount||0)};
   }
 }
 function parseJSONArray(txt){
   const a=txt.indexOf('['),b=txt.lastIndexOf(']');
-  if(a<0||b<a)throw new Error('A resposta não contém um array JSON.');
-  return JSON.parse(txt.slice(a,b+1));
+  if(a>=0&&b>a){try{return JSON.parse(txt.slice(a,b+1))}catch(e){}}
+  // resposta cortada ou com lixo: aproveita os objetos completos
+  const out=[];let d=0,st=-1,str=false,es=false;
+  for(let i=0;i<txt.length;i++){const c=txt[i];
+    if(str){if(es)es=false;else if(c==='\\')es=true;else if(c==='"')str=false;continue}
+    if(c==='"')str=true;else if(c==='{'){if(!d)st=i;d++}else if(c==='}'&&d){d--;if(!d){try{out.push(JSON.parse(txt.slice(st,i+1)))}catch(e){}}}}
+  if(!out.length)throw new Error('A resposta não contém um array JSON.');
+  return out;
+}
+// nova tentativa automática: limite de uso (429), servidor ocupado (5xx) ou falha de rede
+async function callAIRetry(prompt,label){
+  const WAIT=[5,10,20,40,60];
+  for(let t=0;;t++){
+    try{return await callAI(prompt)}
+    catch(e){
+      const st=e.status,temp=!e.fatal&&(st===429||st===408||st===409||(st>=500&&st<600)||(!st&&e.name==='TypeError'));
+      if(!temp||t>=WAIT.length)throw e;
+      let w=WAIT[t];const ra=parseFloat(e.retryAfter);if(ra>0)w=Math.min(120,Math.ceil(ra));
+      const m=/(?:try again|tente novamente|retry) in ([\d.]+)\s*(ms|s)/i.exec(e.message||'');if(m)w=Math.min(120,Math.ceil(m[2]==='ms'?m[1]/1000:+m[1])+1);
+      for(let k=w;k>0;k--){$('status').textContent=`${label}: ${st===429?'limite de uso atingido':'falha temporária'}. Nova tentativa em ${k}s (tentativa ${t+2} de ${WAIT.length+1})…`;await new Promise(r=>setTimeout(r,1000))}
+    }
+  }
 }
 
 /* ---------- análise ---------- */
@@ -560,27 +642,46 @@ async function analyze(){
   saveSettings();
   const chunks=buildChunks();
   if($('provider').value==='manual'){
-    manualChunks=chunks;
+    manualChunks=chunks;$('resumeBtn').classList.add('hidden');resumeState=null;
     $('manualParts').innerHTML=chunks.map((c,i)=>`<div class="part"><b>Parte ${i+1} de ${chunks.length}</b>
       <div class="row" style="margin:6px 0"><button class="small" onclick="copyPart(${i})">Copiar prompt</button></div>
       <textarea id="mp${i}" readonly style="min-height:60px">${esc(buildPrompt(c,i,chunks.length))}</textarea>
       <label style="margin-top:6px">Cole aqui a resposta da IA:</label><textarea id="mr${i}" style="min-height:80px"></textarea></div>`).join('');
     show('manualBox');$('manualBox').scrollIntoView({behavior:'smooth'});return;
   }
-  $('analyzeBtn').disabled=true;const all=[];let inT=0,outT=0;
-  try{
-    for(let i=0;i<chunks.length;i++){
-      setProgress(i/chunks.length,`Analisando parte ${i+1} de ${chunks.length}…`);
-      const res=await callAI(buildPrompt(chunks[i],i,chunks.length));
-      inT+=res.inTok;outT+=res.outTok;
-      all.push(...parseJSONArray(res.text));
-    }
-    setProgress(1,'');ingest(all);
-    const pi=parseFloat($('priceIn').value)||0,po=parseFloat($('priceOut').value)||0;
-    $('status').textContent+=`\nCusto real desta análise: ${usd(inT/1e6*pi+outT/1e6*po)} (${inT.toLocaleString('pt-BR')} tokens de entrada + ${outT.toLocaleString('pt-BR')} de saída).`;
-  }catch(e){setProgress(null,'Erro: '+e.message)}
-  finally{$('analyzeBtn').disabled=false;setTimeout(()=>$('prog').style.display='none',800)}
+  runChunks(chunks,chunks.map((_,i)=>i));
 }
+let resumeState=null;
+// analisa as partes em sequência; cada parte recebe os termos encontrados nas anteriores.
+// Se uma parte falhar, o que já foi analisado é aproveitado e as que faltaram podem ser repetidas.
+async function runChunks(chunks,idxs){
+  $('analyzeBtn').disabled=true;$('resumeBtn').classList.add('hidden');resumeState=null;
+  const all=[],failed=[];let inT=0,outT=0,lastErr='';
+  const found=()=>dedupe(all.map(normItem)).filter(it=>!isBlocked(it.original)&&!glossary.some(g=>keyOf(g.original)===keyOf(it.original)));
+  try{
+    for(let q=0;q<idxs.length;q++){
+      const i=idxs[q],label=`Parte ${i+1} de ${chunks.length}`;
+      setProgress(q/idxs.length,`Analisando ${label.toLowerCase()}…`);
+      try{
+        const res=await callAIRetry(buildPrompt(chunks[i],i,chunks.length,found()),label);
+        inT+=res.inTok;outT+=res.outTok;
+        all.push(...parseJSONArray(res.text));
+      }catch(e){
+        failed.push(i);lastErr=e.message;
+        if(e.fatal||e.status===400||e.status===401||e.status===403||e.status===404){failed.push(...idxs.slice(q+1));break}
+      }
+    }
+    setProgress(1,'');
+    if(all.length)ingest(all);else $('status').textContent='';
+    const pi=parseFloat($('priceIn').value)||0,po=parseFloat($('priceOut').value)||0;
+    if(inT||outT)$('status').textContent+=`\nCusto real desta análise: ${usd(inT/1e6*pi+outT/1e6*po)} (${inT.toLocaleString('pt-BR')} tokens de entrada + ${outT.toLocaleString('pt-BR')} de saída).`;
+    if(failed.length){
+      resumeState={chunks,idxs:failed};$('resumeBtn').classList.remove('hidden');
+      $('status').textContent+=`\n⚠ ${failed.length} de ${idxs.length} parte(s) não foram analisadas (${lastErr}). `+(all.length?'O resultado das outras já foi aproveitado. ':'')+'Use “Tentar de novo as partes que faltaram”; os termos novos vão para a lista de revisão.';
+    }
+  }finally{$('analyzeBtn').disabled=false;setTimeout(()=>$('prog').style.display='none',800)}
+}
+function resumeAnalysis(){if(resumeState){saveSettings();runChunks(resumeState.chunks,resumeState.idxs)}}
 function copyPart(i){navigator.clipboard.writeText($('mp'+i).value);toast('Parte '+(i+1)+' copiada')}
 function processManual(){
   const all=[];
@@ -635,6 +736,7 @@ function dedupe(items){
   return [...m.values()];
 }
 function ingest(raw){
+  snap();
   let items=dedupe(raw.map(normItem));
   let discarded=0,skipped=0;
   items=items.filter(it=>{if(isBlocked(it.original)){skipped++;return false}return true});
@@ -659,6 +761,16 @@ function ingest(raw){
   save();render();renderReview();
   $('status').textContent=(firstRun?`${added} termos adicionados ao glossário.`:`${added} termos novos e ${suggested} sugestões de atualização aguardando revisão.`)+(discarded?` ${discarded} descartados por não aparecerem nas legendas.`:'')+(skipped?` ${skipped} ignorados por já estarem na lista de excluídos.`:'');
   if(pending.length)$('review').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- desfazer ---------- */
+let hist=[];
+function snap(){hist.push(JSON.stringify({glossary,pending,blocked}));if(hist.length>60)hist.shift();updUndo()}
+function updUndo(){const b=$('undoBtn');if(b)b.disabled=!hist.length}
+function undo(){
+  if(!hist.length)return;const d=JSON.parse(hist.pop());
+  glossary=d.glossary;pending=d.pending;blocked=d.blocked;pinnedId=null;
+  save();render();renderReview();renderBlocked();updUndo();toast('Alteração desfeita');
 }
 
 /* ---------- ocorrências ---------- */
@@ -693,16 +805,19 @@ function block(it){
   if(!it||!it.original||isBlocked(it.original))return;
   blocked.push({original:it.original,type:it.type,gender:it.gender||'',translation:it.translation||'',notes:it.notes||'',when:new Date().toLocaleDateString('pt-BR')});
 }
+let blockedView=[];
 function renderBlocked(){
   $('blockedCount').textContent=blocked.length;
-  const list=[...blocked].sort((a,b)=>coll.compare(a.original,b.original));
-  $('blockedBody').innerHTML=list.length?list.map(b=>`<tr class="t-${b.type}"><td>${esc(b.type)}</td><td>${esc(b.original)}</td><td>${esc(b.translation)}</td><td class="occ">${esc(b.when||'')}</td>
-    <td class="act"><button class="small" onclick="restoreBlocked('${esc(b.original).replace(/'/g,"\\'")}')">Restaurar</button> <button class="small danger" onclick="unblock('${esc(b.original).replace(/'/g,"\\'")}')" title="Tira da lista; a IA poderá sugerir de novo">Liberar</button></td></tr>`).join('')
+  blockedView=[...blocked].sort((a,b)=>coll.compare(a.original,b.original));
+  // o botão guarda só a posição na lista (nunca o texto do termo dentro de código)
+  $('blockedBody').innerHTML=blockedView.length?blockedView.map((b,i)=>`<tr class="t-${esc(b.type)}"><td>${esc(b.type)}</td><td>${esc(b.original)}</td><td>${esc(b.translation)}</td><td class="occ">${esc(b.when||'')}</td>
+    <td class="act"><button class="small" data-restore="${i}" title="Devolve o termo ao glossário; a IA também volta a poder sugeri-lo">Restaurar</button></td></tr>`).join('')
     :'<tr><td colspan="5" class="help" style="text-align:center">Nenhum termo excluído.</td></tr>';
 }
+$('blockedBody').addEventListener('click',e=>{const b=e.target.closest('[data-restore]');if(!b)return;const it=blockedView[+b.dataset.restore];if(it)restoreBlocked(it.original)});
 function unblock(o){blocked=blocked.filter(b=>keyOf(b.original)!==keyOf(o));save();renderBlocked()}
 function restoreBlocked(o){
-  const b=blocked.find(x=>keyOf(x.original)===keyOf(o));if(!b)return;
+  const b=blocked.find(x=>keyOf(x.original)===keyOf(o));if(!b)return;snap();
   if(!glossary.some(g=>keyOf(g.original)===keyOf(o))){
     const it=normItem(b);delete it.update;it.occ=files.length?findEpisodes(it.original):[];glossary.push(it);
   }
@@ -731,14 +846,14 @@ function renderReview(){
       <td class="act"><button class="small ok" onclick="acceptOne('${p.id}')">Aceitar</button> <button class="small danger" onclick="rejectOne('${p.id}')">Excluir</button></td></tr>`}).join('');
 }
 function acceptOne(pid,silent){
-  const i=pending.findIndex(p=>p.id===pid);if(i<0)return;const p=pending[i];
+  const i=pending.findIndex(p=>p.id===pid);if(i<0)return;const p=pending[i];if(!silent)snap();
   if(p.kind==='update'){const g=glossary.find(x=>x.id===p.targetId);if(g)Object.assign(g,{type:p.item.type,gender:p.item.gender,original:p.item.original,translation:p.item.translation,notes:p.item.notes})}
   else glossary.push(p.item);
   pending.splice(i,1);if(!silent){save();render();renderReview()}
 }
-function rejectOne(pid){const p=pending.find(x=>x.id===pid);if(p&&p.kind==='new')block(p.item);pending=pending.filter(p=>p.id!==pid);renderBlocked();save();renderReview()}
-function acceptAll(){[...pending].forEach(p=>acceptOne(p.id,true));save();render();renderReview();toast('Termos aceitos')}
-function rejectAll(){if(!confirm('Descartar todos os itens em revisão? Os termos novos irão para a lista de excluídos e não serão sugeridos de novo.'))return;pending.forEach(p=>{if(p.kind==='new')block(p.item)});pending=[];renderBlocked();save();renderReview()}
+function rejectOne(pid){snap();const p=pending.find(x=>x.id===pid);if(p&&p.kind==='new')block(p.item);pending=pending.filter(p=>p.id!==pid);renderBlocked();save();renderReview()}
+function acceptAll(){snap();[...pending].forEach(p=>acceptOne(p.id,true));save();render();renderReview();toast('Termos aceitos')}
+function rejectAll(){if(!confirm('Descartar todos os itens em revisão? Os termos novos irão para a lista de excluídos e não serão sugeridos de novo.'))return;snap();pending.forEach(p=>{if(p.kind==='new')block(p.item)});pending=[];renderBlocked();save();renderReview()}
 
 /* ---------- tabela ---------- */
 function typeSelect(v){return `<select data-f="type">${TYPES.map(t=>`<option${t===v?' selected':''}>${t}</option>`).join('')}</select>`}
@@ -777,8 +892,8 @@ function onSearch(){$('searchClear').classList.toggle('hidden',!$('search').valu
 function clearSearch(){$('search').value='';onSearch();$('search').focus()}
 function render(){
   buildChips();
-  const q=$('search').value.trim().toLowerCase();
-  const rows=sorted(glossary).filter(g=>g.id===pinnedId||(typeFilter.has(g.type)&&genderFilter.has(g.gender||'')&&(!occFilter||((g.occ||[]).length?(g.occ||[]).some(o=>occFilter.has(o)):occFilter.has('__EMPTY__')))&&(!q||[g.original,g.translation].some(x=>(x||'').toLowerCase().includes(q)))));
+  const q=fold($('search').value.trim());
+  const rows=sorted(glossary).filter(g=>g.id===pinnedId||(typeFilter.has(g.type)&&genderFilter.has(g.gender||'')&&(!occFilter||((g.occ||[]).length?(g.occ||[]).some(o=>occFilter.has(o)):occFilter.has('__EMPTY__')))&&(!q||[g.original,g.translation].some(x=>fold(x).includes(q)))));
   $('count').textContent=`${rows.length} de ${glossary.length} termos`+(occFilter?` · filtro de ocorrências ativo`:'');
   $('occTh').classList.toggle('active',!!occFilter);
   let prev=null;
@@ -810,7 +925,7 @@ function maybeRerender(t,next){
   render();
 }
 document.addEventListener('change',e=>{
-  if(e.target.tagName!=='SELECT'||!e.target.dataset.f)return;const t=findTarget(e.target);if(!t)return;
+  if(e.target.tagName!=='SELECT'||!e.target.dataset.f)return;const t=findTarget(e.target);if(!t)return;snap();
   t.obj[e.target.dataset.f]=e.target.value;if(!t.review)t.obj.edited=true;
   if(t.obj.type==='CHARACTER'&&!t.obj.gender)t.obj.gender='?';
   // atualiza só o visual da linha
@@ -825,7 +940,7 @@ document.addEventListener('focusout',e=>{
     const v=el.innerText.replace(/\s+/g,' ').trim();const f=el.dataset.f;
     if(t.obj[f]!==v){
       if(f==='original'&&v&&glossary.some(g=>g!==t.obj&&keyOf(g.original)===keyOf(v))){toast('Este termo já existe no glossário.');el.innerText=t.obj[f];return}
-      t.obj[f]=v;if(!t.review)t.obj.edited=true;
+      snap();t.obj[f]=v;if(!t.review)t.obj.edited=true;
       if(f==='original'&&files.length)t.obj.occ=findEpisodes(v);
       save();
     }
@@ -856,6 +971,7 @@ function addRow(){
 function delRow(id){
   const g=glossary.find(x=>x.id===id);
   if(g&&g.original&&!confirm(`Excluir "${g.original}"? Ele vai para a lista de termos excluídos e não será sugerido de novo.`))return;
+  if(g&&g.original)snap();
   if(id===pinnedId)pinnedId=null;
   if(g&&g.original)block(g);
   glossary=glossary.filter(x=>x.id!==id);save();render();renderBlocked();
@@ -881,7 +997,8 @@ function exportXlsx(){
   ws['!autofilter']={ref:XLSX.utils.encode_range({s:{r:0,c:0},e:{r:rows.length,c:head.length-1}})};
   const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Glossário');
   const title=$('projectTitle').value.trim();
-  const info=XLSX.utils.aoa_to_sheet([['Projeto',title],['Contexto',$('projectContext').value],['Exportado em',new Date().toLocaleString('pt-BR')]]);
+  save();
+  const info=XLSX.utils.aoa_to_sheet([['Projeto',title],['Contexto',$('projectContext').value],['Exportado em',new Date().toLocaleString('pt-BR')],['ID',currentId||'']]);
   XLSX.utils.book_append_sheet(wb,info,'Info');
   const bws=XLSX.utils.aoa_to_sheet([['Tipo','Gênero','Original','Tradução','Notas','Excluído em'],...blocked.map(b=>[b.type,b.gender||'',b.original,b.translation||'',b.notes||'',b.when||''])]);
   bws['!cols']=[{wch:15},{wch:8},{wch:28},{wch:28},{wch:40},{wch:12}];
@@ -903,10 +1020,14 @@ $('xlsxInput').addEventListener('change',async e=>{
     const ed=pick(r,'editado','edited').toLowerCase();it.edited=['sim','s','yes','y','true','1','x'].includes(ed);
     delete it.update;return it}).filter(it=>it.original);
   if(!imported.length)return toast('Nenhum termo encontrado. A planilha precisa ao menos das colunas Tipo, Original e Tradução.');
-  resetState();
-  let title='';
-  if(wb.Sheets['Info']){const a=XLSX.utils.sheet_to_json(wb.Sheets['Info'],{header:1});const row=a.find(r=>norm(String(r[0]||''))==='projeto');title=row?String(row[1]||''):''}
+  let title='',fid='';
+  if(wb.Sheets['Info']){const a=XLSX.utils.sheet_to_json(wb.Sheets['Info'],{header:1});const row=a.find(r=>norm(String(r[0]||''))==='projeto');title=row?String(row[1]||''):'';
+    const ir=a.find(r=>norm(String(r[0]||''))==='id');fid=ir?String(ir[1]||'').trim():''}
   if(!title)title=(wb.Props&&wb.Props.Title)||f.name.replace(/\.xlsx$/i,'').replace(/_\d{4}-\d{2}-\d{2}$/,'').replace(/\s*\[KNP\]\s*$/i,'').replace(/\s*\(\d+\)$/,'');
+  // se o projeto já existe na memória (mesmo ID ou, sem ID, mesmo título), atualiza o mesmo em vez de criar outro
+  const ix=readIndex(),same=ix.find(x=>fid&&x.id===fid)||ix.find(x=>!fid&&title&&(x.title||'').trim()===title.trim());
+  if(same&&same.count&&(!same.exported||same.exported<same.updated)&&!confirm(`O projeto "${same.title||title}" já está na memória deste navegador e tem alterações que não foram exportadas. Substituir pelo conteúdo do arquivo?`))return;
+  resetState();if(same)currentId=same.id;
   let ctx='';if(wb.Sheets['Info']){const a=XLSX.utils.sheet_to_json(wb.Sheets['Info'],{header:1});const row=a.find(r=>norm(String(r[0]||''))==='contexto');ctx=row?String(row[1]||''):''}
   $('projectContext').value=ctx;$('projectTitle').value=title;document.title=(title?title+' · ':'')+'LexiSub';
   glossary=dedupe(imported).map(x=>{delete x.update;return x});pending=[];
